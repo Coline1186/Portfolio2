@@ -1,0 +1,88 @@
+import express from "express";
+import cors from "cors";
+import http from "http";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
+import Cookies from "cookies";
+import typeDefs from "./typeDefs";
+import resolvers from "./resolvers";
+import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
+import datasource from "./datasource/datasource";
+import { User } from "./entities/User.entity";
+import { jwtVerify } from "jose";
+import { findUserByEmail } from "./utils/user.logic";
+
+export interface MyContext {
+  req: express.Request;
+  res: express.Response;
+  user: User | null;
+}
+
+export interface Payload {
+  email: string;
+}
+
+const app = express();
+const httpServer = http.createServer(app);
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+});
+
+const corsOptions: cors.CorsOptions = {
+  origin: ["http://localhost:5173"],
+  credentials: true,
+};
+
+const commonMiddleware = [
+  cors<cors.CorsRequest>(corsOptions),
+  express.json({ limit: "10mb" }),
+];
+
+async function main() {
+  await server.start();
+
+  app.use(
+    "/",
+    ...commonMiddleware,
+    expressMiddleware(server, {
+      context: async ({ req, res }) => {
+        let user: User | null = null;
+
+        const cookies = new Cookies(req, res);
+        const token = cookies.get("token");
+
+        if (token) {
+          try {
+            const verify = await jwtVerify<Payload>(
+              token,
+              new TextEncoder().encode(`${process.env.JWT_SECRET}`),
+            );
+            user = await findUserByEmail(verify.payload.email);
+          } catch (error: any) {
+            console.error("JWT verification failed:", error);
+
+            if (error.code === "ERR_JWT_EXPIRED") {
+              console.warn(
+                "Token expired— suppression recommandée côté client.",
+              );
+            }
+          }
+        }
+
+        return { req, res, user };
+      },
+    }),
+  );
+
+  await datasource.initialize();
+  console.log("DB initialized!");
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 4000 }, resolve),
+  );
+  console.log(`🚀 Server ready at ${process.env.BACKEND_URL}`);
+}
+main();
