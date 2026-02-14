@@ -11,6 +11,7 @@ RUN apk --update --no-cache add curl
 
 COPY src src
 COPY tsconfig.json .
+COPY jest.config.js .
 
 #script permettant d'attendre le healthy du back avant de lancer codegen.
 #COPY wait-for-healthcheck.sh /usr/local/bin/wait-for-healthcheck.sh
