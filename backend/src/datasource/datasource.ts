@@ -10,8 +10,8 @@ export default new DataSource({
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
-  synchronize: false, // pas à utiliser en prod (faire des migrations pour la prod);
-  logging: false, // nous permettra de voir les requêtes SQL qui sont jouées dans le terminal
+  synchronize: false, 
+  logging: false, 
 
   entities: ["src/entities/**/*.ts"],
   migrations: ["src/migrations/**/*.ts"],
