@@ -24,9 +24,6 @@ services:
       - 5435:5432
     volumes:
       - portfolio_db:/var/lib/postgresql/data
-<<<<<<< Updated upstream
-  
-=======
   frontend:
     build: ./frontend
     ports:
@@ -42,6 +39,5 @@ services:
           target: /src
           ignore:
             - node_modules/
->>>>>>> Stashed changes
 volumes:
   portfolio_db:

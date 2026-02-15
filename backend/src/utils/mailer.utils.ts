@@ -1,4 +1,3 @@
-// src/utils/mailer.ts
 import nodemailer from "nodemailer";
 import { ContactInputDTO } from "../dto/ContactInput.dto";
 
@@ -15,11 +14,7 @@ export const transporter = nodemailer.createTransport({
 export async function sendContactEmail(contact: ContactInputDTO) {
   await transporter.sendMail({
     from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-
-    // 👉 Toi (admin)
     to: process.env.EMAIL_USER,
-
-    // 👉 Permet de répondre directement au client
     replyTo: contact.email,
 
     subject: `Nouveau message de ${contact.firstName} ${contact.lastName}`,
