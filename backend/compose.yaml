@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: ./
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./src:/app/src"
+    env_file:
+      - ./.env
+      - ./db.env
+    develop:
+      watch:
+        - action: sync+restart
+          path: .
+          target: backend/src
+          ignore:
+            - node_modules/
+  db:
+    image: postgres:16
+    restart: always
+    env_file:
+      - ./db.env
+    ports:
+      - 5435:5432
+    volumes:
+      - portfolio_db:/var/lib/postgresql/data
+  images:
+    build: ./images
+    volumes:
+      - ./images/uploads:/app/uploads
+      - ./images/src:/app/src
+    ports:
+      - 3002:3002
+volumes:
+  portfolio_db:

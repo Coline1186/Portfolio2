@@ -8,7 +8,8 @@
     "m:g": "npm run typeorm -- -d src/datasource/datasource.ts migration:generate src/migrations/Init",
     "m:r": "npm run typeorm -- -d src/datasource/datasource.ts migration:run",
     "m:revert": "npm run typeorm -- -d src/datasource/datasource.ts migration:revert",
-    "test": "jest --runInBand"  },
+    "test": "jest --runInBand"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

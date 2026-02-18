@@ -4,4 +4,5 @@ node_modules
 dist
 package-lock.json
 .DS_Store
-images/uploads
+backend/images/uploads/*
+!backend/images/uploads/.gitkeep

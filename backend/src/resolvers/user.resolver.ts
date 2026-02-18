@@ -9,6 +9,11 @@ import { generateToken } from "../utils/auth.utils";
 const userRepo = datasource.getRepository(User);
 
 export default {
+  Query: {
+    userInfo: async (_p: any, args: { id: string }) => {
+      return await userRepo.findOneBy({ id: args.id });
+  }
+},
   Mutation: {
     register: async (_p: any, { input }: any) => {
       const newUser = userRepo.create({

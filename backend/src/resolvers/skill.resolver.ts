@@ -69,7 +69,7 @@ export default {
                 throw new Error("Compétence non trouvée");
             }
 
-            await skillRepo.remove(skill);
+            await skillRepo.delete(skill);
 
             return true;
         },
