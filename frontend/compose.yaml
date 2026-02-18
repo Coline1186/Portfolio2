@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build: ./
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    volumes:
+      - "./:/app"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    env_file:
+      - ./.env
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /src
+          ignore:
+            - node_modules/
