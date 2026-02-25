@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import moi from "../assets/IMG_5476.jpeg";
+import moi from "../assets/IMG_5476.webp";
 import "animate.css";
 import MenuBurger from "../layoutElements/BurgerMenu";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const linkStyle =
-    "animate__animated animate__backInDown text-[var(--primary-color)] no-underline text-[1.2rem] font-[Raleway] font-semibold";
+    "animate__animated animate__backInDown text-[var(--primary-color)] no-underline text-[1.2rem] font-semibold";
 
   interface ScrollOptions {
     top: number;
@@ -30,7 +30,7 @@ function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 border-b-[6px] border-[#ffc58d] bg-[rgb(250,248,244)]">
-      <nav className="relative flex justify-between items-center w-full lg:w-[78vw] h-[8vh] px-5 tablet:h-22.5 lg:h-25">
+      <nav className="relative flex justify-between items-center w-full lg:w-screen h-[8vh] px-5 tablet:h-22.5 lg:h-25">
         <NavLink
           to="#home"
           className="w-[20%] tablet:w-[14%] lg:w-[10%]"
@@ -51,7 +51,7 @@ function Header() {
             onScroll={(event) => scrollWithOffset(event.currentTarget, 100)}
             onClick={toggleMenu}
           >
-            A propos
+            À propos
           </a>
           <a
             href="#skills"

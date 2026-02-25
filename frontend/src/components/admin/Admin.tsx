@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { UserStar } from "lucide-react"
 import SkillManagement from "./skill/SkillManagement"
+import AboutManagement from "./about/AboutManagement"
 
 function AdminPage() {
    return (
@@ -13,21 +14,21 @@ function AdminPage() {
          </div>
          <div className="my-8 mx-4">
             <Tabs
-               defaultValue="books"
+               defaultValue="skills"
                className="w-full h-full border rounded-lg"
             >
                <TabsList className="flex flex-col sm:flex-row w-full bg-muted">
                   <TabsTrigger
-                     value="books"
+                     value="skills"
                      className="w-full sm:w-auto text-sm sm:text-base data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground"
                   >
-                     Gestion des Compétences
+                     Gestion des Skills
                   </TabsTrigger>
                   <TabsTrigger
-                     value="categories"
+                     value="abouts"
                      className="w-full sm:w-auto text-sm sm:text-base data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground"
                   >
-                     Gestion des catégories
+                     Gestion des photos
                   </TabsTrigger>
                   <TabsTrigger
                      value="users"
@@ -36,11 +37,11 @@ function AdminPage() {
                      Gestion des utilisateurs
                   </TabsTrigger>
                </TabsList>
-               <TabsContent value="books">
+               <TabsContent value="skills">
                   <SkillManagement />
                </TabsContent>
-               <TabsContent value="categories">
-                  {/* <CategoryManagement /> */}
+               <TabsContent value="abouts">
+                  <AboutManagement />
                </TabsContent>
                <TabsContent value="users">
                   {/* <UserManagement /> */}

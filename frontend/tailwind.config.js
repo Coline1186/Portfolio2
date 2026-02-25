@@ -11,10 +11,22 @@ export default {
           "0%, 100%": { borderColor: "hsl(0,0%,80%)" },
           "50%": { borderColor: "transparent" },
         },
+        shine: {
+          "0%": {
+            backgroundPosition: "0",
+          },
+          "60%": {
+            backgroundPosition: "600px",
+          },
+          "100%": {
+            backgroundPosition: "600px",
+          },
+        },
       },
       animation: {
         typewriter: "typewriter 4s steps(40) 1s 1 normal both",
         blink: "blink 0.8s infinite",
+        shine: "shine 5s linear infinite",
       },
       screens: {
         tablet: "600px",

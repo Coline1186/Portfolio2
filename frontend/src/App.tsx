@@ -4,8 +4,9 @@ import Admin from "./components/admin/Admin";
 import Header from "./components/Header";
 import ProtectedArea from "./auth/ProtectedArea";
 import Login from "./components/Login";
-import LogoBack from "./assets/logoBack.jpg";
+import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
+import About from "./components/About";
 
 function HomePage() {
   return (
@@ -23,15 +24,14 @@ function HomePage() {
               Coline Grosso
             </h1>
 
-            <h3 className="mt-6 text-xl text-[#563a3f] border-r-2 border-gray-300 whitespace-nowrap overflow-hidden inline-block animate-typewriter animate-blink tablet:text-2xl lg:text-4xl">
+            <h3 className="mt-6 text-xl font-[Dosis] text-[#563a3f] border-r-2 border-gray-300 whitespace-nowrap overflow-hidden inline-block animate-typewriter animate-blink tablet:text-2xl lg:text-4xl">
               Développeuse Web Full Stack
             </h3>
           </div>
         </section>
 
         <section id="about" className="section">
-          <h2>A propos</h2>
-          <p>Presentation rapide.</p>
+          <About />
         </section>
         <section id="skills" className="section">
           <h2>Mes competences</h2>
