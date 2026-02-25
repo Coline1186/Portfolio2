@@ -14,9 +14,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Force npm public registry
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config delete //registry.npmjs.org/:_authToken || true
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm config delete '//registry.npmjs.org/:_authToken' || true
+          npm install
         working-directory: backend
 
       - name: Run tests
