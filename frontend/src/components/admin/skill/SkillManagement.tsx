@@ -70,7 +70,11 @@ function SkillManagement() {
               {data?.skills.map((skill) => (
                 <TableRow key={skill.id}>
                   <TableHead className="text-left">{skill.name}</TableHead>
-                  <TableHead className="text-left">{skill.logo}</TableHead>
+                  <TableHead className="text-left"><img
+                      src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
+                      alt={`Logo de ${skill.name}`}
+                      className="w-10 h-10 object-cover rounded-md"
+                    /></TableHead>
                   <TableHead>
                     <AddEditSkill
                       refetch={refetch}

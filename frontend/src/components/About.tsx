@@ -77,7 +77,7 @@ function About() {
             </p>
           </Fade>
         </div>
-        <div className="relative w-full h-[50vh] lg:h-[60vh] lg:mt-[3vh] mt-6 lg:pr-[8%]">
+        <div className="relative w-full h-[50vh] lg:h-[60vh] lg:mt-[3vh] mt-6 lg:pr-[8%] lg:w-[95%]">
           <AnimatePresence mode="wait">
             {data?.abouts.map(
               (about, index) =>

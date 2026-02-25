@@ -1,7 +1,69 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Poetsen+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Pacifico&family=Poiret+One&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
+/* =========================
+   Raleway
+========================= */
+
+@font-face {
+  font-family: "Raleway";
+  src: url("/src/assets/fonts/raleway-v37-latin-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Raleway";
+  src: url("/src/assets/fonts/raleway-v37-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Raleway";
+  src: url("/src/assets/fonts/raleway-v37-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================
+   Dosis
+========================= */
+
+@font-face {
+  font-family: "Dosis";
+  src: url("/src/assets/fonts/dosis-v34-latin-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================
+   Pacifico
+========================= */
+
+@font-face {
+  font-family: "Pacifico";
+  src: url("/src/assets/fonts/pacifico-v23-latin-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================
+   Poetsen One
+========================= */
+
+@font-face {
+  font-family: "Poetsen One";
+  src: url("/src/assets/fonts/poetsen-one-v3-latin-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @config "../tailwind.config.js";
 
 

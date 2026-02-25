@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --exit-child --watch src --poll src/index.ts",
+    "build": "tsc",
     "typeorm": "typeorm-ts-node-commonjs",
     "m:g": "npm run typeorm -- -d src/datasource/datasource.ts migration:generate src/migrations/Init",
     "m:r": "npm run typeorm -- -d src/datasource/datasource.ts migration:run",

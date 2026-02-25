@@ -2,6 +2,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Raleway", "sans-serif"],
+        dosis: ["Dosis", "sans-serif"],
+        pacifico: ["Pacifico", "cursive"],
+        poetsen: ['"Poetsen One"', "cursive"],
+      },
       keyframes: {
         typewriter: {
           from: { width: "0%" },
