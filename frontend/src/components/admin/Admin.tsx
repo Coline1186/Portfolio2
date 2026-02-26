@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs"
 import { UserStar } from "lucide-react"
 import SkillManagement from "./skill/SkillManagement"
 import AboutManagement from "./about/AboutManagement"
+import CvManagement from "./cv/CvManagement"
 
 function AdminPage() {
    return (
@@ -31,10 +32,10 @@ function AdminPage() {
                      Gestion des photos
                   </TabsTrigger>
                   <TabsTrigger
-                     value="users"
+                     value="cv"
                      className="w-full sm:w-auto text-sm sm:text-base data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground"
                   >
-                     Gestion des utilisateurs
+                     Ajouter mon CV
                   </TabsTrigger>
                </TabsList>
                <TabsContent value="skills">
@@ -43,8 +44,8 @@ function AdminPage() {
                <TabsContent value="abouts">
                   <AboutManagement />
                </TabsContent>
-               <TabsContent value="users">
-                  {/* <UserManagement /> */}
+               <TabsContent value="cv">
+                  <CvManagement />
                </TabsContent>
             </Tabs>
          </div>
