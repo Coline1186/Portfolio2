@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
 import About from "./components/About";
+import Skill from "./components/Skill";
 
 function HomePage() {
   return (
@@ -34,8 +35,7 @@ function HomePage() {
           <About />
         </section>
         <section id="skills" className="section">
-          <h2>Mes competences</h2>
-          <p>Technos et outils.</p>
+          <Skill />
         </section>
         <section id="projects" className="section">
           <h2>Mes projets</h2>
