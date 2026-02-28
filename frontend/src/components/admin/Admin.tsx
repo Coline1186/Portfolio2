@@ -3,6 +3,8 @@ import { UserStar } from "lucide-react"
 import SkillManagement from "./skill/SkillManagement"
 import AboutManagement from "./about/AboutManagement"
 import CvManagement from "./cv/CvManagement"
+import ProjectManagement from "./project/ProjectManagement"
+import { Button } from "../../ui/button"
 
 function AdminPage() {
    return (
@@ -13,6 +15,7 @@ function AdminPage() {
                <h1>Page Admin</h1>
             </div>
          </div>
+         <Button className="mx-4 my-2"><a href="/">Portfolio</a></Button>
          <div className="my-8 mx-4">
             <Tabs
                defaultValue="skills"
@@ -37,6 +40,12 @@ function AdminPage() {
                   >
                      Ajouter mon CV
                   </TabsTrigger>
+                  <TabsTrigger
+                     value="projects"
+                     className="w-full sm:w-auto text-sm sm:text-base data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground"
+                  >
+                     Ajouter un projet
+                  </TabsTrigger>
                </TabsList>
                <TabsContent value="skills">
                   <SkillManagement />
@@ -46,6 +55,9 @@ function AdminPage() {
                </TabsContent>
                <TabsContent value="cv">
                   <CvManagement />
+               </TabsContent>
+               <TabsContent value="projects">
+                  <ProjectManagement />
                </TabsContent>
             </Tabs>
          </div>

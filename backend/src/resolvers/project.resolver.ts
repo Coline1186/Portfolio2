@@ -75,6 +75,10 @@ export default {
         project.name = name;
       }
 
+      if (input.image !== undefined) {
+        project.image = input.image;
+      }
+
       if (input.githubLink !== undefined) {
         project.githubLink = input.githubLink;
       }

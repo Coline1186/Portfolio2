@@ -8,6 +8,7 @@ import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
 import About from "./components/About";
 import Skill from "./components/Skill";
+import Project from "./components/Project";
 
 function HomePage() {
   return (
@@ -38,8 +39,7 @@ function HomePage() {
           <Skill />
         </section>
         <section id="projects" className="section">
-          <h2>Mes projets</h2>
-          <p>Selection de projets.</p>
+          <Project />
         </section>
         <section id="contact" className="section">
           <h2>Contact</h2>
