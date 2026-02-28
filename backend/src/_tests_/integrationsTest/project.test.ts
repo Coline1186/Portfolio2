@@ -16,6 +16,7 @@ const CREATE_PROJECT = `
         createProject(input: $input) {
           id
           name
+          image
           githubLink
           webLink
           skills {
@@ -30,6 +31,7 @@ const UPDATE_PROJECT = `
         updateProject(input: $input) {
           id
           name
+          image
           githubLink
           webLink
           skills {
@@ -61,6 +63,7 @@ async function createProject(skillId: string) {
   const result = await exec(CREATE_PROJECT, {
     input: {
       name: "Initial Project",
+      image: "initial.png",
       githubLink: "https://github.com/initial",
       webLink: "https://initial.test",
       skillIds: [skillId],
@@ -111,6 +114,7 @@ describe("Project - Create", () => {
     const result = await exec(CREATE_PROJECT, {
       input: {
         name: "Test Project",
+        image: "test.png",
         githubLink: "https://github.com/test/project",
         webLink: "https://project.test",
         skillIds: [skill.id],
@@ -123,6 +127,7 @@ describe("Project - Create", () => {
 
     expect(project).toMatchObject({
       name: "Test Project",
+      image: "test.png",
       githubLink: "https://github.com/test/project",
       webLink: "https://project.test",
     });
@@ -142,6 +147,7 @@ describe("Project - Create", () => {
     const result = await exec(CREATE_PROJECT, {
       input: {
         name: "Initial Project",
+        image: "test.png",
         skillIds: [skill.id],
       },
     });
@@ -155,6 +161,7 @@ describe("Project - Create", () => {
       {
         input: {
           name: "Test Project",
+          image: "test.png",
           skillIds: [],
         },
       },

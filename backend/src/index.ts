@@ -29,11 +29,17 @@ const httpServer = http.createServer(app);
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: process.env.NODE_ENV !== "production",
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
-const corsOptions: cors.CorsOptions = {
-  origin: ["http://localhost:5173"],
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL,
+].filter((origin): origin is string => origin !== undefined);
+
+const corsOptions = {
+  origin: allowedOrigins,
   credentials: true,
 };
 
@@ -81,8 +87,10 @@ async function main() {
   await datasource.initialize();
   console.log("DB initialized!");
 
+  const PORT = process.env.PORT || 4000;
+
   await new Promise<void>((resolve) =>
-    httpServer.listen({ port: 4000 }, resolve),
+    httpServer.listen({ port: PORT }, resolve),
   );
   console.log(`🚀 Server ready at ${process.env.BACKEND_URL}`);
 }

@@ -9,6 +9,9 @@ export class Project {
     @Column()
     name!: string;
 
+    @Column()
+    image!: string;
+
     @Column({ nullable: true })
     githubLink?: string;
 
