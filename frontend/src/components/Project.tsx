@@ -1,16 +1,9 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Fade } from "react-awesome-reveal";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "./ui/carousel";
 import { Card, CardContent } from "@/ui/card";
 import { useQuery } from "@apollo/client/react";
 import { GET_PROJECT } from "@/requetes/queries/project.query";
 import { useState } from "react";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
 
 type ProjectQuery = {
   projects: {
@@ -65,21 +58,29 @@ function Project() {
                         <img
                           src={`${import.meta.env.VITE_BACKEND_URL_FILES}${project.image}`}
                           alt={project.name}
+                          loading="lazy"
+                          decoding="async"
+                          width={1200}
+                          height={675}
                           className="w-full h-65 tablet:h-87.5 lg:h-112.5 object-cover transition-transform duration-500 tablet:group-hover:scale-105"
                         />
 
                         <div
                           className={`absolute inset-0 flex flex-col justify-center items-center text-white text-center p-4 tablet:p-6 bg-black/70 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
-                          <h3 className="text-lg tablet:text-xl lg:text-2xl font-bold mb-4">
+                          <h2 className="text-lg tablet:text-xl lg:text-2xl font-bold mb-4">
                             {project.name}
-                          </h3>
+                          </h2>
                           <div className="flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
                             {project.skills.map((skill) => (
                               <img
                                 key={skill.id}
                                 src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
                                 alt={skill.name}
+                                loading="lazy"
+                                decoding="async"
+                                width={40}
+                                height={40}
                                 className="w-8 h-8 tablet:w-10 tablet:h-10 object-contain"
                               />
                             ))}

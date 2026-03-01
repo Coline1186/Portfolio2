@@ -5,6 +5,7 @@ import AboutManagement from "./about/AboutManagement"
 import CvManagement from "./cv/CvManagement"
 import ProjectManagement from "./project/ProjectManagement"
 import { Button } from "../../ui/button"
+import { NavLink } from "react-router-dom"
 
 function AdminPage() {
    return (
@@ -15,7 +16,7 @@ function AdminPage() {
                <h1>Page Admin</h1>
             </div>
          </div>
-         <Button className="mx-4 my-2"><a href="/">Portfolio</a></Button>
+         <Button className="mx-4 my-2"><NavLink to="/">Portfolio</NavLink></Button>
          <div className="my-8 mx-4">
             <Tabs
                defaultValue="skills"

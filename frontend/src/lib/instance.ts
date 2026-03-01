@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from "axios";
+
+export const uploadBaseUrl = import.meta.env.VITE_BACKEND_URL_FILES ?? "";
+
 export default axios.create({
-   baseURL: import.meta.env.VITE_BACKEND_URL_FILES,
-   headers: {
-      "Content-Type": "multipart/form-data",
-   },
-})
+  baseURL: uploadBaseUrl.replace(/\/+$/, ""),
+});

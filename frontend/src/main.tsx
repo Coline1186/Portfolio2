@@ -7,7 +7,6 @@ import "./index.css";
 import "./App.css";
 import { AuthProvider } from "./auth/AuthProvider";
 import { Toaster } from "sonner";
-import { ToastContainer } from "react-toastify"
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_API_URL,
@@ -19,13 +18,13 @@ const client = new ApolloClient({
   link: httpLink,
 });
 
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={client}>
       <AuthProvider>
         <App />
         <Toaster position="top-right" />
-        <ToastContainer position="top-right" autoClose={2000} />
       </AuthProvider>
     </ApolloProvider>
   </StrictMode>,

@@ -1,6 +1,6 @@
-import datasource from "@/datasource/datasource";
-import { Cv } from "@/entities/Cv.entity";
-import requireAdmin from "@/utils/requireAdmin.utils";
+import datasource from "../datasource/datasource";
+import { Cv } from "../entities/Cv.entity";
+import requireAdmin from "../utils/requireAdmin.utils";
 
 const cvRepo = datasource.getRepository(Cv);
 

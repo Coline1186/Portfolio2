@@ -1,3 +1,6 @@
+import { gql } from "graphql-tag";
+
+export default gql`
 type Skill {
     id: ID!
     name: String!
@@ -40,3 +43,4 @@ input UpdateProjectInput {
     githubLink: String
     webLink: String
 }
+`;

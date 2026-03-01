@@ -1,4 +1,3 @@
-// import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useQuery } from "@apollo/client/react";
 import { GET_SINGLE_CV } from "../requetes/queries/cv.query";
@@ -50,26 +49,13 @@ function Modal({
         X
       </button>
       <div>
-        <object
-          data={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
-          type="application/pdf"
-          className="w-[55vw] h-[85vh] border rounded-md bg-white"
-        >
-          <a
-            href={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm underline"
-          >
-            Ouvrir le CV
-          </a>
-        </object>
+        <img
+          src={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
+          alt="Mon CV"
+          className="w-[50vw]"
+        />
       </div>
     </div>
   );
 }
-// Modal.propTypes = {
-//   setModalOpen: PropTypes.func.isRequired,
-//   close: PropTypes.func.isRequired,
-// };
 export default Modal;

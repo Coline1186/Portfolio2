@@ -1,33 +1,36 @@
 services:
   backend:
     build:
-    context: .
-    dockerfile: Dockerfile.dev
-  ports:
-    - "4000:4000"
-  volumes:
-    - ./:/app
-    - /app/node_modules
-  env_file:
-    - ./.env
-    - ./db.env
-  depends_on:
-    - db
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - ./.env
+      - ./db.env
+    depends_on:
+      - db
+
   db:
     image: postgres:16
     restart: always
     env_file:
       - ./db.env
     ports:
-      - 5435:5432
+      - "5435:5432"
     volumes:
       - portfolio_db:/var/lib/postgresql/data
+
   images:
     build: ./images
-    volumes:
-      - ./images/uploads:/app/uploads
-      - ./images/src:/app/src
     ports:
-      - 3002:3002
+      - "3002:3002"
+    volumes:
+      - ./images/uploads:/data/uploads
+      - ./images/src:/app/src
+
 volumes:
   portfolio_db:

@@ -1,5 +1,5 @@
-import datasource from "@/datasource/datasource";
-import { Cv } from "@/entities/Cv.entity";
+import datasource from "../datasource/datasource";
+import { Cv } from "../entities/Cv.entity";
 import { Repository } from "typeorm";
 
 export default class CvRepository extends Repository<Cv> {

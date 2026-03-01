@@ -1,6 +1,5 @@
 import {
   useState,
-  useEffect,
   useCallback,
   useMemo,
   type PropsWithChildren,
@@ -35,10 +34,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const getInfos = useCallback(async () => {
     await checkToken();
   }, [checkToken]);
-
-  useEffect(() => {
-    void getInfos();
-  }, [getInfos]);
 
   const value: ContextType = useMemo(
     () => ({

@@ -7,6 +7,15 @@ import Cookies from "cookies";
 import { generateToken } from "../utils/auth.utils";
 
 const userRepo = datasource.getRepository(User);
+const isProduction = process.env.NODE_ENV === "production";
+
+const authCookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? ("none" as const) : ("lax" as const),
+  path: "/",
+  maxAge: 2 * 60 * 60 * 1000, // 2h
+};
 
 export default {
   Query: {
@@ -38,14 +47,15 @@ export default {
 
         const token = await generateToken(user.email);
         let cookies = new Cookies(ctx.req, ctx.res);
-        cookies.set("token", token, {
-            httpOnly: true,
-        });
+        cookies.set("token", token, authCookieOptions);
         return { message: "Bienvenue", success: true };
     },
     logout: async (_p: any, _args: any, ctx: MyContext) => {
         let cookies = new Cookies(ctx.req, ctx.res);
-        cookies.set("token");
+        cookies.set("token", "", {
+          ...authCookieOptions,
+          maxAge: 0,
+        });
         return { message: "Déconnexion réussie", success: true };
     },
     checkToken: async (_p: any, _args: any, ctx: MyContext) => {

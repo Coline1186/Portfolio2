@@ -30,7 +30,7 @@ export default {
         },
       },
       animation: {
-        typewriter: "typewriter 4s steps(40) 1s 1 normal both",
+        typewriter: "typewriter 1.2s steps(30) 0s 1 normal both",
         blink: "blink 0.8s infinite",
         shine: "shine 5s linear infinite",
       },

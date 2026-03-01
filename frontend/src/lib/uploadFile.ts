@@ -1,6 +1,12 @@
-import instance from "../lib/instance";
+import instance, { uploadBaseUrl } from "../lib/instance";
 
 export async function uploadFile(file: File): Promise<string> {
+  if (!uploadBaseUrl) {
+    throw new Error(
+      "Configuration manquante: VITE_BACKEND_URL_FILES",
+    );
+  }
+
   const formData = new FormData();
   formData.append("file", file, file.name);
 

@@ -8,10 +8,11 @@ import Cookies from "cookies";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import datasource from "./datasource/datasource";
+import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import { User } from "./entities/User.entity";
 import { jwtVerify } from "jose";
 import { findUserByEmail } from "./utils/user.logic";
+import datasource from "./datasource/datasource";
 
 export interface MyContext {
   req: express.Request;
@@ -26,11 +27,19 @@ export interface Payload {
 const app = express();
 const httpServer = http.createServer(app);
 
+if (process.env.NODE_ENV === "production") {
+  // Required behind reverse proxies (Render, Railway, etc.) for secure cookie behavior.
+  app.set("trust proxy", 1);
+}
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: process.env.NODE_ENV !== "production",
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  introspection: true,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+  ],
 });
 
 const allowedOrigins = [
@@ -52,7 +61,7 @@ async function main() {
   await server.start();
 
   app.use(
-    "/",
+    "/graphql",
     ...commonMiddleware,
     expressMiddleware(server, {
       context: async ({ req, res }) => {
@@ -87,11 +96,24 @@ async function main() {
   await datasource.initialize();
   console.log("DB initialized!");
 
-  const PORT = process.env.PORT || 4000;
+  if (process.env.NODE_ENV === "production") {
+    await datasource.runMigrations();
+    console.log("Migrations executed");
+  }
+
+  const PORT = Number(process.env.PORT) || 4000;
 
   await new Promise<void>((resolve) =>
-    httpServer.listen({ port: PORT }, resolve),
+    httpServer.listen(
+      {
+        port: PORT,
+        host: "0.0.0.0",
+      },
+      resolve,
+    ),
   );
-  console.log(`🚀 Server ready at ${process.env.BACKEND_URL}`);
+  console.log(
+    `🚀 Server ready at ${process.env.BACKEND_URL} && ${process.env.PORT}`,
+  );
 }
 main();

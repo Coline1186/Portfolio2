@@ -42,6 +42,7 @@ function Skill() {
   if (errorCv) return <p>Erreur de chargement du CV</p>;
 
   const cvFile = dataCv?.cv?.cv;
+  const isPdfCv = cvFile?.toLowerCase().endsWith(".pdf");
 
   return (
     <div className="min-h-screen border-t-6 border-[#ffc58d]">
@@ -68,6 +69,10 @@ function Skill() {
                 <img
                   src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
                   alt={skill.name}
+                  loading="lazy"
+                  decoding="async"
+                  width={147}
+                  height={140}
                   className="w-[22vw] h-auto max-h-17.5 object-contain mb-2.5 lg:w-25 lg:max-h-25"
                 />
                 <p>{skill.name}</p>
@@ -90,12 +95,26 @@ function Skill() {
             </p>
             <div className="flex flex-col items-center">
               {cvFile ? (
-                <img
-                  src={`${import.meta.env.VITE_BACKEND_URL_FILES}${cvFile}`}
-                  alt="mon cv"
-                  className="peer mt-8 w-[70vw] max-w-107.5 lg:w-[40vw] lg:max-w-140 lg:transition-all lg:duration-700 lg:ease-in-out lg:hover:scale-105 lg:hover:mb-6 cursor-pointer"
-                  onClick={handleClick}
-                />
+                isPdfCv ? (
+                  <button
+                    type="button"
+                    className="peer mt-8 w-[70vw] max-w-107.5 lg:w-[40vw] lg:max-w-140 h-[44vh] lg:h-[60vh] border rounded-md bg-white cursor-pointer lg:transition-all lg:duration-700 lg:ease-in-out lg:hover:scale-105 lg:hover:mb-6"
+                    onClick={handleClick}
+                  >
+                    <span className="text-base font-semibold">Ouvrir l'aperçu du CV (PDF)</span>
+                  </button>
+                ) : (
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL_FILES}${cvFile}`}
+                    alt="mon cv"
+                    loading="lazy"
+                    decoding="async"
+                    width={840}
+                    height={1188}
+                    className="peer mt-8 w-[70vw] max-w-107.5 lg:w-[40vw] lg:max-w-140 lg:transition-all lg:duration-700 lg:ease-in-out lg:hover:scale-105 lg:hover:mb-6 cursor-pointer"
+                    onClick={handleClick}
+                  />
+                )
               ) : (
                 <p className="mt-8 text-sm">CV indisponible pour le moment.</p>
               )}

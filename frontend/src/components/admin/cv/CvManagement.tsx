@@ -74,11 +74,22 @@ function CvManagement() {
               {data?.cv && (
                 <TableRow>
                   <TableHead className="text-left">
-                    <img
-                      src={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
-                      alt="CV"
-                      className="w-24 h-24 object-cover rounded-md"
-                    />
+                    {data.cv.cv.toLowerCase().endsWith(".pdf") ? (
+                      <a
+                        href={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline"
+                      >
+                        Voir le PDF
+                      </a>
+                    ) : (
+                      <img
+                        src={`${import.meta.env.VITE_BACKEND_URL_FILES}${data.cv.cv}`}
+                        alt="CV"
+                        className="w-24 h-24 object-cover rounded-md"
+                      />
+                    )}
                   </TableHead>
                   <TableHead>
                     <AddEditCv

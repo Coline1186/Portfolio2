@@ -2,7 +2,8 @@ db.env
 *.env
 node_modules
 dist
-package-lock.json
 .DS_Store
 backend/images/uploads/*
 !backend/images/uploads/.gitkeep
+stats.html
+frontend/stats.html

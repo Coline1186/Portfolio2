@@ -68,6 +68,7 @@ function Login() {
             Email
           </label>
           <input
+          autoComplete="email"
             type="email"
             {...register("email")}
             placeholder="Indiquez votre email"
@@ -88,6 +89,7 @@ function Login() {
           </label>
           <input
             type="password"
+            autoComplete="current-password"
             {...register("password")}
             placeholder="Indiquez votre mot de passe"
             className={`w-full p-3 text-base border ${

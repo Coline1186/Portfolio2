@@ -1,16 +1,71 @@
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
-import Admin from "./components/admin/Admin";
 import Header from "./components/Header";
 import ProtectedArea from "./auth/ProtectedArea";
-import Login from "./components/Login";
 import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
-import About from "./components/About";
-import Skill from "./components/Skill";
-import Project from "./components/Project";
+
+const Admin = lazy(() => import("./components/admin/Admin"));
+const Login = lazy(() => import("./components/Login"));
+const About = lazy(() => import("./components/About"));
+const Skill = lazy(() => import("./components/Skill"));
+const Project = lazy(() => import("./components/Project"));
+
+function DeferredSection({
+  id,
+  className,
+  children,
+  minHeight = "65vh",
+}: {
+  id: string;
+  className?: string;
+  children: ReactNode;
+  minHeight?: string;
+}) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    if (isVisible || !sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px", threshold: 0 },
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  return (
+    <section id={id} className={className} ref={sectionRef}>
+      {isVisible ? (
+        <Suspense fallback={<div className="min-h-[20vh]" />}>{children}</Suspense>
+      ) : (
+        <div aria-hidden="true" style={{ minHeight }} />
+      )}
+    </section>
+  );
+}
 
 function HomePage() {
+  useEffect(() => {
+    const prefetchSections = () => {
+      void import("./components/About");
+      void import("./components/Skill");
+      void import("./components/Project");
+    };
+
+    const timerId = window.setTimeout(prefetchSections, 1200);
+    return () => window.clearTimeout(timerId);
+  }, []);
+
   return (
     <>
       <Header />
@@ -26,21 +81,21 @@ function HomePage() {
               Coline Grosso
             </h1>
 
-            <h3 className="mt-6 text-xl font-[Dosis] text-[#563a3f] border-r-2 border-gray-300 whitespace-nowrap overflow-hidden inline-block animate-typewriter animate-blink tablet:text-2xl lg:text-4xl">
+            <h2 className="mt-6 text-xl font-[Dosis] text-[#563a3f] border-r-2 border-gray-300 whitespace-nowrap overflow-hidden inline-block animate-typewriter animate-blink tablet:text-2xl lg:text-4xl">
               Développeuse Web Full Stack
-            </h3>
+            </h2>
           </div>
         </section>
 
-        <section id="about" className="section">
+        <DeferredSection id="about" className="section" minHeight="85vh">
           <About />
-        </section>
-        <section id="skills" className="section">
+        </DeferredSection>
+        <DeferredSection id="skills" className="section" minHeight="85vh">
           <Skill />
-        </section>
-        <section id="projects" className="section">
+        </DeferredSection>
+        <DeferredSection id="projects" className="section" minHeight="85vh">
           <Project />
-        </section>
+        </DeferredSection>
         <section id="contact" className="section">
           <h2>Contact</h2>
           <p>Coordonnees et formulaire.</p>
@@ -56,9 +111,23 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/auth/login" element={<Login />} />
+        <Route
+          path="/auth/login"
+          element={
+            <Suspense fallback={<div className="min-h-screen" />}>
+              <Login />
+            </Suspense>
+          }
+        />
         <Route element={<ProtectedArea isAdminPage />}>
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/admin"
+            element={
+              <Suspense fallback={<div className="min-h-screen" />}>
+                <Admin />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,3 +1,6 @@
+import { gql } from "graphql-tag";
+
+export default gql`
 enum UserRole {
   ADMIN
 }
@@ -45,3 +48,4 @@ input InputLogin {
     email: String!
     password: String!
 }
+`;
