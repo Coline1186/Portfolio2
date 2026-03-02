@@ -95,17 +95,30 @@ function ProjectManagement() {
                     {project.githubLink}
                   </TableHead>
                   <TableHead className="text-left">{project.webLink}</TableHead>
-                  {project.skills.map((skill) => (
-                    <span key={skill.id} className="mr-2">
-                      {skill.logo && (
-                        <img
-                          src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
-                          alt={`Logo de ${skill.logo}`}
-                          className="w-6 h-6 object-cover rounded-md"
-                        />
+                  <TableHead className="text-left">
+                    <div className="flex gap-2 min-h-6 items-center">
+                      {project.skills.length > 0 ? (
+                        project.skills.map((skill) => (
+                          <div
+                            key={skill.id}
+                            className="w-6 h-6 flex items-center justify-center"
+                          >
+                            {skill.logo ? (
+                              <img
+                                src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
+                                alt={`Logo de ${skill.name}`}
+                                className="w-6 h-6 object-cover rounded-md"
+                              />
+                            ) : (
+                              <div className="w-6 h-6 bg-gray-200 rounded-md" />
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <span className="text-xs text-gray-400"></span>
                       )}
-                    </span>
-                  ))}
+                    </div>
+                  </TableHead>
                   <TableHead>
                     <AddEditProject
                       refetch={refetch}
@@ -116,7 +129,7 @@ function ProjectManagement() {
                   <TableHead>
                     <Button
                       onClick={() => handleDelete(project.id)}
-                      className="text-left w-25 pr-1"
+                      className="w-25"
                     >
                       Supprimer
                     </Button>

@@ -1,10 +1,19 @@
-import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import Header from "./components/Header";
 import ProtectedArea from "./auth/ProtectedArea";
 import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
+import Contact from "./components/Contact";
+import { ToastContainer } from "react-toastify";
 
 const Admin = lazy(() => import("./components/admin/Admin"));
 const Login = lazy(() => import("./components/Login"));
@@ -46,7 +55,9 @@ function DeferredSection({
   return (
     <section id={id} className={className} ref={sectionRef}>
       {isVisible ? (
-        <Suspense fallback={<div className="min-h-[20vh]" />}>{children}</Suspense>
+        <Suspense fallback={<div className="min-h-[20vh]" />}>
+          {children}
+        </Suspense>
       ) : (
         <div aria-hidden="true" style={{ minHeight }} />
       )}
@@ -96,10 +107,10 @@ function HomePage() {
         <DeferredSection id="projects" className="section" minHeight="85vh">
           <Project />
         </DeferredSection>
-        <section id="contact" className="section">
-          <h2>Contact</h2>
-          <p>Coordonnees et formulaire.</p>
-        </section>
+        <DeferredSection id="contact" className="section" minHeight="85vh">
+          <ToastContainer position="top-right"/>
+            <Contact />
+        </DeferredSection>
       </main>
       <ScrollToTop smooth color="rgb(77, 76, 76)" className="scroll-top" />
     </>
