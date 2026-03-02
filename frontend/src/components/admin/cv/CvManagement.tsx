@@ -101,7 +101,7 @@ function CvManagement() {
                   <TableHead>
                     <Button
                       onClick={() => handleDelete(data.cv!.id)}
-                      className="text-left w-25 pr-1"
+                      className="w-25"
                     >
                       Supprimer
                     </Button>
