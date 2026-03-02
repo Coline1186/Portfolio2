@@ -83,7 +83,7 @@ function AboutManagement() {
                   <TableHead>
                     <Button
                       onClick={() => handleDelete(about.id)}
-                      className="text-left w-25 pr-1"
+                      className="w-25"
                     >
                       Supprimer
                     </Button>
