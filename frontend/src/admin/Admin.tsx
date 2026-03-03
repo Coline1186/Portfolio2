@@ -1,10 +1,10 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { UserStar } from "lucide-react";
 import SkillManagement from "./skill/SkillManagement";
 import AboutManagement from "./about/AboutManagement";
 import CvManagement from "./cv/CvManagement";
 import ProjectManagement from "./project/ProjectManagement";
-import { Button } from "../../ui/button";
+import { Button } from "../ui/button";
 import { Link, NavLink } from "react-router-dom";
 
 function AdminPage() {

@@ -7,17 +7,18 @@ import {
   type ReactNode,
 } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "react-scroll-to-top";
 import Header from "./components/Header";
 import ProtectedArea from "./auth/ProtectedArea";
 import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
 import Contact from "./components/Contact";
 import { ToastContainer } from "react-toastify";
-import Logout from "./components/Logout";
+import Logout from "./auth/Logout";
+import Footer from "./components/Footer";
+import Privacy from "./components/Privacy";
 
-const Admin = lazy(() => import("./components/admin/Admin"));
-const Login = lazy(() => import("./components/Login"));
+const Admin = lazy(() => import("./admin/Admin"));
+const Login = lazy(() => import("./auth/Login"));
 const About = lazy(() => import("./components/About"));
 const Skill = lazy(() => import("./components/Skill"));
 const Project = lazy(() => import("./components/Project"));
@@ -99,21 +100,23 @@ function HomePage() {
           </div>
         </section>
 
-        <DeferredSection id="about" className="section" minHeight="85vh">
+        <DeferredSection id="about" className="section min-h-screen scroll-mt-22" minHeight="85vh">
           <About />
         </DeferredSection>
-        <DeferredSection id="skills" className="section" minHeight="85vh">
+        <DeferredSection id="skills" className="section scroll-mt-22" minHeight="85vh">
           <Skill />
         </DeferredSection>
-        <DeferredSection id="projects" className="section" minHeight="85vh">
+        <DeferredSection id="projects" className="section scroll-mt-22" minHeight="85vh">
           <Project />
         </DeferredSection>
-        <DeferredSection id="contact" className="section" minHeight="85vh">
-          <ToastContainer position="top-right"/>
-            <Contact />
+        <DeferredSection id="contact" className="section scroll-mt-22" minHeight="85vh">
+          <ToastContainer position="top-right" />
+          <Contact />
+        </DeferredSection>
+        <DeferredSection id="footer" className="section">
+          <Footer />
         </DeferredSection>
       </main>
-      <ScrollToTop smooth color="rgb(77, 76, 76)" className="scroll-top" />
     </>
   );
 }
@@ -142,6 +145,7 @@ function App() {
           />
         </Route>
         <Route path="/auth/logout" element={<Logout />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </BrowserRouter>
   );

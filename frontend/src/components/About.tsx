@@ -29,10 +29,10 @@ function About() {
   if (error) return <p>Erreur de chargement des Photos</p>;
 
   return (
-    <div className="border-t-6 border-[#ffc58d] pb-[2.9rem] min-h-screen lg:min-h-[88vh]">
+    <div className="border-t-6 border-[#ffc58d] pb-[2.9rem]">
       <Fade duration={2000}>
         <div>
-          <h1 className="text-4xl font-bold text-center mt-[1vh] mb-[2.5vh] lg:mb-[5vh]">
+          <h1 className="text-4xl font-bold text-center mt-3 mb-[2.5vh] lg:mb-[5vh]">
             À propos de moi
           </h1>
         </div>

@@ -14,7 +14,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-10 border-b-[6px] border-[#ffc58d] bg-[rgb(250,248,244)]">
+    <header className="h-[96px] fixed top-0 left-0 right-0 z-10 border-b-[6px] border-[#ffc58d] bg-[rgb(250,248,244)]">
       <nav className="relative flex justify-between items-center w-full lg:w-screen h-[8vh] px-5 tablet:h-22.5 lg:h-25">
         <HashLink smooth to="#" className="w-[20%] tablet:w-[14%] lg:w-[10%]">
           <img

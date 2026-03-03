@@ -1,11 +1,14 @@
 import { useMutation } from "@apollo/client/react";
 import { useState } from "react";
-import { CREATE_ABOUT, UPDATE_ABOUT } from "../../../requetes/mutations/about.mutation";
-import { useCreateOrUpdate } from "../../../hooks/useCreateOrUpdate";
-import { uploadFile } from "../../../lib/uploadFile";
-import EntityFormWrapper from "../../../layoutElements/EntityFormWrapper";
+import {
+  CREATE_ABOUT,
+  UPDATE_ABOUT,
+} from "../../requetes/mutations/about.mutation";
+import { useCreateOrUpdate } from "../../hooks/useCreateOrUpdate";
+import { uploadFile } from "../../lib/uploadFile";
+import EntityFormWrapper from "../../layoutElements/EntityFormWrapper";
 import { Label } from "@radix-ui/react-label";
-import { Input } from "../../../ui/input";
+import { Input } from "../../ui/input";
 
 type About = {
   id: string;
@@ -75,7 +78,7 @@ function AddEditAbout({ refetch, about, triggerLabel }: Props) {
           ? "Modifiez cette photo existante."
           : "Une photo n'existe pas encore? Ajoutez la ici."
       }
-      isDisabled={(!about && !file)}
+      isDisabled={!about && !file}
     >
       <div className="grid gap-3">
         <Label>Photo</Label>

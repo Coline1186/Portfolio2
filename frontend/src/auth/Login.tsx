@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/useAuth";
+import { useAuth } from "./useAuth";
 import { loginSchema } from "../validation/schema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

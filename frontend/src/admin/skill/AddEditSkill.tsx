@@ -1,14 +1,14 @@
-import { Label } from "../../../ui/label";
-import { Input } from "../../../ui/input";
+import { Label } from "../../ui/label";
+import { Input } from "../../ui/input";
 import { useState } from "react";
 import {
   CREATE_SKILL,
   UPDATE_SKILL,
-} from "../../../requetes/mutations/skill.mutation";
+} from "../../requetes/mutations/skill.mutation";
 import { useMutation } from "@apollo/client/react";
-import { useCreateOrUpdate } from "../../../hooks/useCreateOrUpdate";
-import { uploadFile } from "../../../lib/uploadFile";
-import EntityFormWrapper from "../../../layoutElements/EntityFormWrapper";
+import { useCreateOrUpdate } from "../../hooks/useCreateOrUpdate";
+import { uploadFile } from "../../lib/uploadFile";
+import EntityFormWrapper from "../../layoutElements/EntityFormWrapper";
 
 type Skill = {
   id: string;

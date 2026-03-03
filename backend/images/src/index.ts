@@ -16,12 +16,7 @@ if (!process.env.UPLOAD_DIR) {
 }
 
 const uploadDir = process.env.UPLOAD_DIR;
-console.log("UPLOAD_DIR =", uploadDir);
-
-// Crée le dossier s’il n’existe pas
 fs.mkdirSync(uploadDir, { recursive: true });
-
-console.log("Using upload directory:", uploadDir);
 
 /* ===============================
    CORS

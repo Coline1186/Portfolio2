@@ -2,14 +2,14 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import {
   CREATE_PROJECT,
   UPDATE_PROJECT,
-} from "../../../requetes/mutations/project.mutation";
+} from "../../requetes/mutations/project.mutation";
 import { useState } from "react";
-import { uploadFile } from "../../../lib/uploadFile";
-import { useCreateOrUpdate } from "../../../hooks/useCreateOrUpdate";
-import EntityFormWrapper from "../../../layoutElements/EntityFormWrapper";
+import { uploadFile } from "../../lib/uploadFile";
+import { useCreateOrUpdate } from "../../hooks/useCreateOrUpdate";
+import EntityFormWrapper from "../../layoutElements/EntityFormWrapper";
 import { Label } from "@radix-ui/react-label";
-import { Input } from "../../../ui/input";
-import { GET_SKILLS } from "../../../requetes/queries/skill.query";
+import { Input } from "../../ui/input";
+import { GET_SKILLS } from "../../requetes/queries/skill.query";
 
 type Skill = {
   id: string;

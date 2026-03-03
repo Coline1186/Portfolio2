@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client/react";
-import { GET_SINGLE_CV } from "../../../requetes/queries/cv.query";
-import { DELETE_CV } from "../../../requetes/mutations/cv.mutation";
+import { GET_SINGLE_CV } from "../../requetes/queries/cv.query";
+import { DELETE_CV } from "../../requetes/mutations/cv.mutation";
 import { toast } from "sonner";
 import {
   Table,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../ui/table";
-import { Button } from "../../../ui/button";
+} from "../../ui/table";
+import { Button } from "../../ui/button";
 import AddEditCv from "./AddEditCv";
 
 type Cv = {
@@ -120,10 +120,7 @@ function CvManagement() {
 
       {!data?.cv && (
         <div className="mt-4">
-          <AddEditCv
-            refetch={refetch}
-            triggerLabel="Ajouter mon CV"
-          />
+          <AddEditCv refetch={refetch} triggerLabel="Ajouter mon CV" />
         </div>
       )}
     </div>

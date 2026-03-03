@@ -5,12 +5,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../ui/table";
-import { GET_PROJECT } from "../../../requetes/queries/project.query";
-import { DELETE_PROJECT } from "../../../requetes/mutations/project.mutation";
+} from "../../ui/table";
+import { GET_PROJECT } from "../../requetes/queries/project.query";
+import { DELETE_PROJECT } from "../../requetes/mutations/project.mutation";
 import { toast } from "sonner";
 import AddEditProject from "./AddEditProject";
-import { Button } from "../../../ui/button";
+import { Button } from "../../ui/button";
 
 type ProjectQuery = {
   projects: {
