@@ -14,6 +14,7 @@ import LogoBack from "./assets/logoBack.webp";
 import "animate.css";
 import Contact from "./components/Contact";
 import { ToastContainer } from "react-toastify";
+import Logout from "./components/Logout";
 
 const Admin = lazy(() => import("./components/admin/Admin"));
 const Login = lazy(() => import("./components/Login"));
@@ -140,6 +141,7 @@ function App() {
             }
           />
         </Route>
+        <Route path="/auth/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );

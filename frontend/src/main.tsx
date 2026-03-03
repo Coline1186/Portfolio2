@@ -12,7 +12,7 @@ const httpLink = new HttpLink({
   uri: import.meta.env.VITE_API_URL,
   credentials: "include",
 });
-console.log("API URL:", import.meta.env.VITE_API_URL);
+
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: httpLink,

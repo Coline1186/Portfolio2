@@ -1,35 +1,32 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { ContactInputDTO } from "../dto/ContactInput.dto";
 
-export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendContactEmail(contact: ContactInputDTO) {
-  await transporter.sendMail({
-    from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
-    replyTo: contact.email,
+  try {
+    await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: process.env.EMAIL_TO!,
+      replyTo: contact.email,
+      subject: `Nouveau message de ${contact.firstName} ${contact.lastName}`,
+      html: `
+        <h2>Nouveau message via le formulaire</h2>
 
-    subject: `Nouveau message de ${contact.firstName} ${contact.lastName}`,
+        <p><strong>Prénom :</strong> ${contact.firstName}</p>
+        <p><strong>Nom :</strong> ${contact.lastName}</p>
+        <p><strong>Email :</strong> ${contact.email}</p>
 
-    html: `
-      <h2>Nouveau message via le formulaire</h2>
+        <hr/>
 
-      <p><strong>Prénom :</strong> ${contact.firstName}</p>
-      <p><strong>Nom :</strong> ${contact.lastName}</p>
-      <p><strong>Email :</strong> ${contact.email}</p>
+        <p><strong>Message :</strong></p>
+        <p>${contact.message.replace(/\n/g, "<br>")}</p>
+      `,
+    });
 
-      <hr/>
-
-      <p><strong>Message :</strong></p>
-      <p>${contact.message.replace(/\n/g, "<br>")}</p>
-    `,
-  });
+    return true;
+  } catch (error) {
+    console.error("Erreur envoi email:", error);
+    return false;
+  }
 }

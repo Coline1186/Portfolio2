@@ -28,7 +28,6 @@ const app = express();
 const httpServer = http.createServer(app);
 
 if (process.env.NODE_ENV === "production") {
-  // Required behind reverse proxies (Render, Railway, etc.) for secure cookie behavior.
   app.set("trust proxy", 1);
 }
 

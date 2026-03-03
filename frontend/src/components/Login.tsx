@@ -1,7 +1,6 @@
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
-import { Link } from "react-router-dom";
 import { loginSchema } from "../validation/schema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -68,7 +67,7 @@ function Login() {
             Email
           </label>
           <input
-          autoComplete="email"
+            autoComplete="email"
             type="email"
             {...register("email")}
             placeholder="Indiquez votre email"
@@ -109,16 +108,6 @@ function Login() {
         >
           Se connecter
         </button>
-
-        <p className="text-center">
-          <Link
-            to="/auth/forgot-password"
-            className="text-amber-500 hover:underline"
-          >
-            Mot de passe oublié ?
-          </Link>
-        </p>
-
         <div className="text-sm text-center">
           {error?.message && (
             <span className="text-red-500 block">{error?.message}</span>
