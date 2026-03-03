@@ -16,6 +16,7 @@ if (!process.env.UPLOAD_DIR) {
 }
 
 const uploadDir = process.env.UPLOAD_DIR;
+console.log("Upload directory:", uploadDir);
 fs.mkdirSync(uploadDir, { recursive: true });
 
 /* ===============================
