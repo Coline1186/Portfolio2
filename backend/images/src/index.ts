@@ -7,20 +7,12 @@ import sharp from "sharp";
 
 const app = express();
 
-/* ===============================
-   CONFIG UPLOAD DIR (OBLIGATOIRE)
-================================ */
-
 if (!process.env.UPLOAD_DIR) {
   throw new Error("UPLOAD_DIR environment variable is not defined");
 }
 
 const uploadDir = process.env.UPLOAD_DIR;
 fs.mkdirSync(uploadDir, { recursive: true });
-
-/* ===============================
-   CORS
-================================ */
 
 app.use(
   cors({
@@ -30,10 +22,6 @@ app.use(
 );
 
 app.options("*", cors());
-
-/* ===============================
-   MULTER STORAGE
-================================ */
 
 const storage = multer.diskStorage({
   destination: function (_, __, cb) {
@@ -47,10 +35,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
-/* ===============================
-   UPLOAD ROUTE
-================================ */
 
 app.post(
   "/upload",
@@ -92,10 +76,6 @@ app.post(
   },
 );
 
-/* ===============================
-   STATIC FILES (CACHE + HEADERS)
-================================ */
-
 app.use(
   "/files",
   express.static(uploadDir, {
@@ -108,10 +88,6 @@ app.use(
     },
   }),
 );
-
-/* ===============================
-   SERVER
-================================ */
 
 const PORT = Number(process.env.PORT) || 3002;
 
