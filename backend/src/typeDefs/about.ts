@@ -1,0 +1,28 @@
+import { gql } from "graphql-tag";
+
+export default gql`
+  type About {
+      id: ID!
+      image: String!
+  }
+
+  type Query {
+      abouts: [About]
+      aboutId(id: ID!): About
+  }
+
+  type Mutation {
+      createAbout(input: CreateAboutInput!): About
+      updateAbout(input: UpdateAboutInput!): About
+      deleteAbout(id: ID!): Boolean
+  }
+
+  input CreateAboutInput {
+      image: String!
+  }
+
+  input UpdateAboutInput {
+      id: ID!
+      image: String
+  }
+`;

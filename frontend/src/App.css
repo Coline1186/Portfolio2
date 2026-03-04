@@ -1,0 +1,21 @@
+:root {
+  color: #111;
+  font-family: "Raleway", sans-serif;
+  background-color: rgb(250, 248, 244);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}

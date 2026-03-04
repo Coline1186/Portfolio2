@@ -1,0 +1,29 @@
+import { gql } from "graphql-tag";
+
+export default gql`
+type Cv {
+    id: ID!
+    cv: String!
+}
+
+type Query {
+    cv: Cv
+    cvs: [Cv]
+    cvId(id: ID!): Cv
+}
+
+type Mutation {
+    createCv(input: CreateCvInput!): Cv
+    updateCv(input: UpdateCvInput!): Cv
+    deleteCv(id: ID!): Boolean
+}
+
+input CreateCvInput {
+    cv: String!
+}
+
+input UpdateCvInput {
+    id: ID!
+    cv: String
+}
+`;

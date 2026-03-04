@@ -1,0 +1,47 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_tag_1 = require("graphql-tag");
+exports.default = (0, graphql_tag_1.gql) `
+type Skill {
+    id: ID!
+    name: String!
+    logo: String!
+}
+
+type Project {
+    id: ID!
+    name: String!
+    image: String!
+    skills: [Skill!]!
+    githubLink: String
+    webLink: String
+}
+
+type Query {
+    projects: [Project]
+    projectId(id: ID!): Project
+}
+
+type Mutation {
+    createProject(input: CreateProjectInput!): Project
+    updateProject(input: UpdateProjectInput!): Project
+    deleteProject(id: ID!): Boolean
+}
+
+input CreateProjectInput {
+    name: String!
+    image: String!
+    skillIds: [ID!]!
+    githubLink: String
+    webLink: String
+}
+
+input UpdateProjectInput {
+    id: ID!
+    name: String
+    image: String
+    skillIds: [ID]
+    githubLink: String
+    webLink: String
+}
+`;
