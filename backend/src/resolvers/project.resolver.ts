@@ -4,6 +4,26 @@ import { Skill } from "../entities/Skill.entity";
 import { In, Not } from "typeorm";
 import requireAdmin from "../utils/requireAdmin.utils";
 
+type CreateProjectArgs = {
+  input: {
+    name: string;
+    image?: string;
+    githubLink?: string;
+    webLink?: string;
+    skillIds?: string[];
+  };
+};
+type UpdateProjectArgs = {
+  input: {
+    id: string;
+    name?: string;
+    image?: string;
+    githubLink?: string;
+    webLink?: string;
+    skillIds?: string[];
+  };
+};
+
 const projectRepo = datasource.getRepository(Project);
 const skillRepo = datasource.getRepository(Skill);
 
@@ -12,7 +32,7 @@ export default {
     projects: async () => {
       return await projectRepo.find({ relations: ["skills"] });
     },
-    projectId: async (_: any, args: { id: string }) => {
+    projectId: async (_: unknown, args: { id: string }) => {
       return await projectRepo.findOne({
         where: { id: args.id },
         relations: ["skills"],
@@ -20,7 +40,7 @@ export default {
     },
   },
   Mutation: {
-    createProject: requireAdmin(async (_: any, { input }: any) => {
+    createProject: requireAdmin(async (_: unknown, { input }: CreateProjectArgs) => {
       const name = input.name?.trim();
       if (!name) {
         throw new Error("Le nom du projet est obligatoire");
@@ -48,7 +68,7 @@ export default {
 
       return projectRepo.save(project);
     }),
-    updateProject: requireAdmin(async (_: any, { input }: any) => {
+    updateProject: requireAdmin(async (_: unknown, { input }: UpdateProjectArgs) => {
       const project = await projectRepo.findOne({
         where: { id: input.id },
         relations: ["skills"],
@@ -64,7 +84,7 @@ export default {
           throw new Error("Le nom du projet ne peut pas être vide");
         }
 
-        const exists = await projectRepo.exist({
+        const exists = await projectRepo.exists({
           where: { name, id: Not(project.id) },
         });
 
@@ -103,7 +123,7 @@ export default {
 
       return projectRepo.save(project);
     }),
-    deleteProject: requireAdmin(async (_: any, { id }: any) => {
+    deleteProject: requireAdmin(async (_: unknown, { id }: { id: string }) => {
       const project = await projectRepo.findOneBy({ id });
 
       if (!project) {

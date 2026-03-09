@@ -4,6 +4,7 @@ export const GET_SKILLS = gql`
   query Skills {
   skills {
     id
+    position
     logo
     name
   }

@@ -1,102 +1,73 @@
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../ui/table";
-import { Button } from "../../ui/button";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { GET_SKILLS } from "../../requetes/queries/skill.query";
-import { DELETE_SKILL } from "../../requetes/mutations/skill.mutation";
+import {
+  DELETE_SKILL,
+  REORDER_SKILLS,
+} from "../../requetes/mutations/skill.mutation";
+
 import { toast } from "sonner";
 import AddEditSkill from "./AddEditSkill";
+import { useSortableEntities } from "@/hooks/useSortableEntities";
+import SortableAdminTable from "@/layoutElements/SortableAdminTable";
+import SortableSkillRow from "./SortableSkillRow";
+
+type Skill = {
+  id: string;
+  position: number;
+  name: string;
+  logo: string;
+};
 
 type SkillQuery = {
-  skills: {
-    id: string;
-    logo: string;
-    name: string;
-  }[];
+  skills: Skill[];
 };
 
 function SkillManagement() {
-  const { refetch, loading, error, data } = useQuery<SkillQuery>(GET_SKILLS);
+  const { data, loading, error, refetch } = useQuery<SkillQuery>(GET_SKILLS);
+  const { items: skills, handleDragEnd } = useSortableEntities({
+    data: data?.skills,
+    reorder: async (ids) => {
+      await reorderSkills({ variables: { ids } });
+    },
+  });
   const [deleteSkill] = useMutation(DELETE_SKILL);
+  const [reorderSkills] = useMutation(REORDER_SKILLS);
 
   const handleDelete = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette compétence ?")) {
       try {
         await deleteSkill({ variables: { deleteSkillId: id } });
-        toast.success("Compétence supprimée avec succès");
+        toast.success("Compétence supprimée");
         refetch();
       } catch {
-        toast.error("Erreur lors de la suppression de la compétence");
+        toast.error("Erreur suppression");
       }
     }
   };
 
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p>Erreur</p>;
+
   return (
     <div className="flex flex-col px-4 py-3">
-      <div className="mt-4 md:mt-0">
-        <h2 className="text-xl font-bold text-gray-800 border-b-2 border-primary inline-block pb-1 mb-6">
-          Compétences existantes
-        </h2>
-      </div>
+      <h2 className="text-xl font-bold border-b-2 border-primary inline-block pb-1 mb-6">
+        Compétences existantes
+      </h2>
 
       <div className="border rounded-md overflow-x-auto">
-        <div className="max-h-100 overflow-y-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-left w-62.5 pr-1">Nom</TableHead>
-                <TableHead className="text-left w-25 pr-1">Logo</TableHead>
-                <TableHead className="text-left w-25 pr-1">Modifier</TableHead>
-                <TableHead className="text-left w-25 pr-1">Supprimer</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading && (
-                <TableRow>
-                  <TableHead colSpan={4}>Chargement...</TableHead>
-                </TableRow>
-              )}
-
-              {error && (
-                <TableRow>
-                  <TableHead colSpan={4}>Erreur de chargement</TableHead>
-                </TableRow>
-              )}
-              {data?.skills.map((skill) => (
-                <TableRow key={skill.id}>
-                  <TableHead className="text-left">{skill.name}</TableHead>
-                  <TableHead className="text-left">
-                    <img
-                      src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
-                      alt={`Logo de ${skill.name}`}
-                      className="w-10 h-10 object-cover rounded-md"
-                    />
-                  </TableHead>
-                  <TableHead>
-                    <AddEditSkill
-                      refetch={refetch}
-                      skill={skill}
-                      triggerLabel="Modifier"
-                    />
-                  </TableHead>
-                  <TableHead>
-                    <Button
-                      onClick={() => handleDelete(skill.id)}
-                      className="w-25"
-                    >
-                      Supprimer
-                    </Button>
-                  </TableHead>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        <SortableAdminTable
+          items={skills}
+          onDragEnd={handleDragEnd}
+          renderRow={(skill, index) => (
+            <SortableSkillRow
+              key={skill.id}
+              skill={skill}
+              index={index}
+              refetch={refetch}
+              handleDelete={handleDelete}
+            />
+          )}
+        />
       </div>
 
       <div className="mt-4">

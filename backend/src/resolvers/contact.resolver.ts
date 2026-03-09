@@ -4,7 +4,7 @@ import { validateEntity } from "../utils/validate-entity";
 
 export default {
   Mutation: {
-    sendContact: async (_: any, { input }: any) => {
+    sendContact: async (_: unknown, { input }: { input: ContactInputDTO }) => {
       const dto = Object.assign(new ContactInputDTO(), input);
 
       await validateEntity(dto);

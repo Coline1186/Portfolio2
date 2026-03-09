@@ -30,12 +30,12 @@ export default {
 
             return singletonCv ? [singletonCv] : [];
         },
-        cvId: async (_: any, args: { id: string }) => {
+        cvId: async (_: unknown, args: { id: string }) => {
             return await cvRepo.findOneBy({ id: args.id });
         },
     },
     Mutation: {
-        createCv: requireAdmin(async (_: any, { input }: { input: { cv: string } }) => {
+        createCv: requireAdmin(async (_: unknown, { input }: { input: { cv: string } }) => {
             const existingCv = await getSingletonCv();
 
             if (existingCv) {
@@ -46,7 +46,7 @@ export default {
             const newCv = cvRepo.create({ cv: input.cv });
             return cvRepo.save(newCv);
         }),
-        updateCv: requireAdmin(async (_: any, { input }: { input: { id: string; cv?: string } }) => {
+        updateCv: requireAdmin(async (_: unknown, { input }: { input: { id: string; cv?: string } }) => {
             const cv = await cvRepo.findOneBy({ id: input.id });
 
             if (!cv) {
@@ -59,7 +59,7 @@ export default {
 
             return cvRepo.save(cv);
         }),
-        deleteCv: requireAdmin(async (_: any, { id }: { id: string }) => {
+        deleteCv: requireAdmin(async (_: unknown, { id }: { id: string }) => {
             const cv = await cvRepo.findOneBy({ id });
 
             if (!cv) {

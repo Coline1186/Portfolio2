@@ -11,6 +11,32 @@ jest.mock("../../datasource/datasource", () => ({
 
 let server: ApolloServer;
 
+type SkillDTO = {
+  position: number;
+  logo: string;
+};
+
+type ProjectDTO = {
+  id: string;
+  name: string;
+  image: string;
+  githubLink: string;
+  webLink: string;
+  skills: SkillDTO[];
+};
+
+type CreateProjectResponse = {
+  createProject: ProjectDTO;
+};
+
+type UpdateProjectResponse = {
+  updateProject: ProjectDTO;
+};
+
+type DeleteProjectResponse = {
+  deleteProject: boolean;
+};
+
 const CREATE_PROJECT = `
       mutation CreateProject($input: CreateProjectInput!) {
         createProject(input: $input) {
@@ -20,6 +46,7 @@ const CREATE_PROJECT = `
           githubLink
           webLink
           skills {
+            position
             logo
           }
         }
@@ -46,7 +73,11 @@ const DELETE_PROJECT = `
       }
      `;
 
-async function exec(query: string, variables?: any, isAdmin = true) {
+async function exec<T>(
+  query: string,
+  variables?: Record<string, unknown>,
+  isAdmin = true,
+) {
   const response = await server.executeOperation(
     { query, variables },
     isAdmin ? { contextValue: { user: { role: "ADMIN" } } } : undefined,
@@ -56,7 +87,12 @@ async function exec(query: string, variables?: any, isAdmin = true) {
     throw new Error("Unexpected incremental response");
   }
 
-  return response.body.singleResult;
+  const result = response.body.singleResult;
+
+  return {
+    ...result,
+    data: result.data as T | undefined,
+  };
 }
 
 async function createProject(skillId: string) {
@@ -70,7 +106,7 @@ async function createProject(skillId: string) {
     },
   });
 
-  return (result.data as any).createProject;
+  return (result.data as CreateProjectResponse).createProject;
 }
 
 beforeAll(async () => {
@@ -107,6 +143,7 @@ describe("Project - Create", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -123,7 +160,7 @@ describe("Project - Create", () => {
 
     expect(result.errors).toBeUndefined();
 
-    const project = (result.data as any).createProject;
+    const project = (result.data as CreateProjectResponse).createProject;
 
     expect(project).toMatchObject({
       name: "Test Project",
@@ -137,7 +174,9 @@ describe("Project - Create", () => {
 
   it("should fail if project name already exists", async () => {
     const skillRepo = datasource_test.getRepository(Skill);
+
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -177,11 +216,13 @@ describe("Project - Update", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill1 = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
 
     const skill2 = await skillRepo.save({
+      position: 2,
       name: "Node",
       logo: "node.svg",
     });
@@ -198,7 +239,7 @@ describe("Project - Update", () => {
 
     expect(result.errors).toBeUndefined();
 
-    const updated = (result.data as any).updateProject;
+    const updated = (result.data as UpdateProjectResponse).updateProject;
 
     expect(updated.name).toBe("Updated Project");
     expect(updated.skills[0].logo).toBe("node.svg");
@@ -236,6 +277,7 @@ describe("Project - Delete", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -247,7 +289,7 @@ describe("Project - Delete", () => {
     });
 
     expect(result.errors).toBeUndefined();
-    expect((result.data as any).deleteProject).toBe(true);
+    expect((result.data as DeleteProjectResponse).deleteProject).toBe(true);
   });
 
   it("should fail delete if not connected", async () => {
@@ -258,24 +300,6 @@ describe("Project - Delete", () => {
       },
       false,
     );
-
-    expect(result.errors).toBeDefined();
-  });
-  it("should fail if project name already exists", async () => {
-    const skillRepo = datasource_test.getRepository(Skill);
-    const skill = await skillRepo.save({
-      name: "React",
-      logo: "react.svg",
-    });
-
-    await createProject(skill.id);
-
-    const result = await exec(CREATE_PROJECT, {
-      input: {
-        name: "Initial Project",
-        skillIds: [skill.id],
-      },
-    });
 
     expect(result.errors).toBeDefined();
   });
