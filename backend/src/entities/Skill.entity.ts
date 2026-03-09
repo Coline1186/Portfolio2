@@ -7,6 +7,9 @@ export class Skill {
     id!: string;
 
     @Column()
+    position!: number;
+
+    @Column()
     name!: string;
 
     @Column()

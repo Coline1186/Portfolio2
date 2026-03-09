@@ -66,12 +66,12 @@ function Project() {
                         />
 
                         <div
-                          className={`absolute inset-0 flex flex-col justify-center items-center text-white text-center p-4 tablet:p-6 bg-black/70 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
+                          className={`gap-10 absolute inset-0 flex flex-col justify-center items-center text-white text-center p-4 tablet:p-6 bg-black/70 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
-                          <h2 className="text-lg tablet:text-xl lg:text-2xl font-bold mb-4">
+                          <h2 className="text-lg text-shadow-[5px_5px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
                             {project.name}
                           </h2>
-                          <div className="flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
+                          <div className="lg:w-160 tablet:w-120 w-60 hover:scale-110 flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
                             {project.skills.map((skill) => (
                               <img
                                 key={skill.id}
@@ -79,9 +79,7 @@ function Project() {
                                 alt={skill.name}
                                 loading="lazy"
                                 decoding="async"
-                                width={40}
-                                height={40}
-                                className="w-8 h-8 tablet:w-10 tablet:h-10 object-contain"
+                                className="w-8 h-8 tablet:w-12 tablet:h-12 lg:w-15 lg:h-15 object-contain"
                               />
                             ))}
                           </div>
@@ -90,6 +88,7 @@ function Project() {
                               <a
                                 href={project.webLink}
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="bg-white text-black px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-gray-200 transition"
                               >
                                 Site
@@ -100,6 +99,7 @@ function Project() {
                               <a
                                 href={project.githubLink}
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="border border-white px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-white hover:text-black transition"
                               >
                                 GitHub
@@ -113,11 +113,6 @@ function Project() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* <div className="flex justify-center mt-4 gap-2 tablet:hidden">
-              {data?.projects.map((_, index) => (
-                <div key={index} className="w-2 h-2 bg-gray-400 rounded-full" />
-              ))}
-            </div> */}
             <CarouselPrevious className="hidden tablet:flex" />
             <CarouselNext className="hidden tablet:flex" />
           </Carousel>
