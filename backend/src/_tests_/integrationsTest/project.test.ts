@@ -11,6 +11,32 @@ jest.mock("../../datasource/datasource", () => ({
 
 let server: ApolloServer;
 
+type SkillDTO = {
+  position: number;
+  logo: string;
+};
+
+type ProjectDTO = {
+  id: string;
+  name: string;
+  image: string;
+  githubLink: string;
+  webLink: string;
+  skills: SkillDTO[];
+};
+
+type CreateProjectResponse = {
+  createProject: ProjectDTO;
+};
+
+type UpdateProjectResponse = {
+  updateProject: ProjectDTO;
+};
+
+type DeleteProjectResponse = {
+  deleteProject: boolean;
+};
+
 const CREATE_PROJECT = `
       mutation CreateProject($input: CreateProjectInput!) {
         createProject(input: $input) {
@@ -47,7 +73,11 @@ const DELETE_PROJECT = `
       }
      `;
 
-async function exec(query: string, variables?: any, isAdmin = true) {
+async function exec<T>(
+  query: string,
+  variables?: Record<string, unknown>,
+  isAdmin = true,
+) {
   const response = await server.executeOperation(
     { query, variables },
     isAdmin ? { contextValue: { user: { role: "ADMIN" } } } : undefined,
@@ -57,10 +87,15 @@ async function exec(query: string, variables?: any, isAdmin = true) {
     throw new Error("Unexpected incremental response");
   }
 
-  return response.body.singleResult;
+  const result = response.body.singleResult;
+
+  return {
+    ...result,
+    data: result.data as T | undefined,
+  };
 }
 
-async function createProject(skillId: string, position = 1) {
+async function createProject(skillId: string) {
   const result = await exec(CREATE_PROJECT, {
     input: {
       name: "Initial Project",
@@ -71,7 +106,7 @@ async function createProject(skillId: string, position = 1) {
     },
   });
 
-  return (result.data as any).createProject;
+  return (result.data as CreateProjectResponse).createProject;
 }
 
 beforeAll(async () => {
@@ -125,7 +160,7 @@ describe("Project - Create", () => {
 
     expect(result.errors).toBeUndefined();
 
-    const project = (result.data as any).createProject;
+    const project = (result.data as CreateProjectResponse).createProject;
 
     expect(project).toMatchObject({
       name: "Test Project",
@@ -204,7 +239,7 @@ describe("Project - Update", () => {
 
     expect(result.errors).toBeUndefined();
 
-    const updated = (result.data as any).updateProject;
+    const updated = (result.data as UpdateProjectResponse).updateProject;
 
     expect(updated.name).toBe("Updated Project");
     expect(updated.skills[0].logo).toBe("node.svg");
@@ -254,7 +289,7 @@ describe("Project - Delete", () => {
     });
 
     expect(result.errors).toBeUndefined();
-    expect((result.data as any).deleteProject).toBe(true);
+    expect((result.data as DeleteProjectResponse).deleteProject).toBe(true);
   });
 
   it("should fail delete if not connected", async () => {

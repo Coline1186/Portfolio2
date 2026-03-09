@@ -91,7 +91,7 @@ function Skill() {
         <div className="flex flex-col items-center justify-start bg-[#faece0] w-full lg:w-[50vw] lg:my-[3%] lg:mx-7">
           <Fade duration={2000}>
             <p className={`hidden lg:block ${titleStyle}`}>
-              Cliquer sur mon CV pour l'agrandir
+              {`Cliquer sur mon CV pour l'agrandir`}
             </p>
             <div className="flex flex-col items-center">
               {cvFile ? (
@@ -101,7 +101,7 @@ function Skill() {
                     className="peer mt-8 w-[70vw] max-w-107.5 lg:w-[40vw] lg:max-w-140 h-[44vh] lg:h-[60vh] border rounded-md bg-white cursor-pointer lg:transition-all lg:duration-700 lg:ease-in-out lg:hover:scale-105 lg:hover:mb-6"
                     onClick={handleClick}
                   >
-                    <span className="text-base font-semibold">Ouvrir l'aperçu du CV (PDF)</span>
+                    <span className="text-base font-semibold">{`Ouvrir l'aperçu du CV (PDF)`}</span>
                   </button>
                 ) : (
                   <img

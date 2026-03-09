@@ -2,6 +2,22 @@ import { Not } from "typeorm";
 import datasource from "../datasource/datasource";
 import { Skill } from "../entities/Skill.entity";
 
+type CreateSkillArgs = {
+  input: {
+    position: number;
+    name: string;
+    logo: string;
+  };
+}
+
+  type UpdateSkillArgs = {
+    input: {
+      id: string;
+      name?: string;
+      logo?: string;
+    };  
+  };
+
 const skillRepo = datasource.getRepository(Skill);
 
 export default {
@@ -9,12 +25,12 @@ export default {
     skills: async () => {
       return await skillRepo.find({ order: { position: "ASC" } });
     },
-    skillId: async (_: any, args: { id: string }) => {
+    skillId: async (_: unknown, args: { id: string }) => {
       return await skillRepo.findOneBy({ id: args.id });
     },
   },
   Mutation: {
-    createSkill: async (_: any, { input }: any) => {
+    createSkill: async (_: unknown, { input }: CreateSkillArgs) => {
       const name = input.name?.trim();
       const position = input.position;
 
@@ -43,7 +59,7 @@ export default {
 
       return skillRepo.save(skill);
     },
-    updateSkill: async (_: any, { input }: any) => {
+    updateSkill: async (_: unknown, { input }: UpdateSkillArgs) => {
       const skill = await skillRepo.findOneBy({ id: input.id });
 
       if (!skill) {
@@ -73,7 +89,7 @@ export default {
 
       return skillRepo.save(skill);
     },
-    reorderSkills: async (_: any, { ids }: { ids: string[] }) => {
+    reorderSkills: async (_: unknown, { ids }: { ids: string[] }) => {
       for (let i = 0; i < ids.length; i++) {
         await skillRepo.update(ids[i], {
           position: i + 1,
@@ -82,7 +98,7 @@ export default {
 
       return true;
     },
-    deleteSkill: async (_: any, { id }: any) => {
+    deleteSkill: async (_: unknown, { id }: { id: string }) => {
       const skill = await skillRepo.findOneBy({ id });
 
       if (!skill) {

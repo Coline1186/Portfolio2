@@ -90,6 +90,7 @@ function Project() {
                               <a
                                 href={project.webLink}
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="bg-white text-black px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-gray-200 transition"
                               >
                                 Site
@@ -100,6 +101,7 @@ function Project() {
                               <a
                                 href={project.githubLink}
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="border border-white px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-white hover:text-black transition"
                               >
                                 GitHub

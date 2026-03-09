@@ -9,13 +9,13 @@ export default {
     abouts: async () => {
       return await aboutRepo.find();
     },
-    aboutId: async (_: any, args: { id: string }) => {
+    aboutId: async (_: unknown, args: { id: string }) => {
       return await aboutRepo.findOneBy({ id: args.id });
     },
   },
   Mutation: {
     createAbout: requireAdmin(
-      async (_: any, { input }: { input: { image: string } }) => {
+      async (_: unknown, { input }: { input: { image: string } }) => {
         const newAbout = aboutRepo.create({
           image: input.image,
         });
@@ -24,7 +24,7 @@ export default {
       },
     ),
     updateAbout: requireAdmin(
-      async (_: any, { input }: { input: { id: string; image?: string } }) => {
+      async (_: unknown, { input }: { input: { id: string; image?: string } }) => {
         const about = await aboutRepo.findOneBy({ id: input.id });
 
         if (!about) {
@@ -38,7 +38,7 @@ export default {
         return aboutRepo.save(about);
       },
     ),
-    deleteAbout: requireAdmin(async (_: any, { id }: { id: string }) => {
+    deleteAbout: requireAdmin(async (_: unknown, { id }: { id: string }) => {
       const about = await aboutRepo.findOneBy({ id });
 
       if (!about) {

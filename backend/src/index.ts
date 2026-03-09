@@ -76,10 +76,10 @@ async function main() {
               new TextEncoder().encode(`${process.env.JWT_SECRET}`),
             );
             user = await findUserByEmail(verify.payload.email);
-          } catch (error: any) {
+          } catch (error: unknown) {
             console.error("JWT verification failed:", error);
 
-            if (error.code === "ERR_JWT_EXPIRED") {
+            if (error instanceof Error && "code" in error && error.code === "ERR_JWT_EXPIRED") {
               console.warn(
                 "Token expired— suppression recommandée côté client.",
               );
