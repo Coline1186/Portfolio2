@@ -20,6 +20,7 @@ const CREATE_PROJECT = `
           githubLink
           webLink
           skills {
+            position
             logo
           }
         }
@@ -59,7 +60,7 @@ async function exec(query: string, variables?: any, isAdmin = true) {
   return response.body.singleResult;
 }
 
-async function createProject(skillId: string) {
+async function createProject(skillId: string, position = 1) {
   const result = await exec(CREATE_PROJECT, {
     input: {
       name: "Initial Project",
@@ -107,6 +108,7 @@ describe("Project - Create", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -137,7 +139,9 @@ describe("Project - Create", () => {
 
   it("should fail if project name already exists", async () => {
     const skillRepo = datasource_test.getRepository(Skill);
+
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -177,11 +181,13 @@ describe("Project - Update", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill1 = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
 
     const skill2 = await skillRepo.save({
+      position: 2,
       name: "Node",
       logo: "node.svg",
     });
@@ -236,6 +242,7 @@ describe("Project - Delete", () => {
     const skillRepo = datasource_test.getRepository(Skill);
 
     const skill = await skillRepo.save({
+      position: 1,
       name: "React",
       logo: "react.svg",
     });
@@ -258,24 +265,6 @@ describe("Project - Delete", () => {
       },
       false,
     );
-
-    expect(result.errors).toBeDefined();
-  });
-  it("should fail if project name already exists", async () => {
-    const skillRepo = datasource_test.getRepository(Skill);
-    const skill = await skillRepo.save({
-      name: "React",
-      logo: "react.svg",
-    });
-
-    await createProject(skill.id);
-
-    const result = await exec(CREATE_PROJECT, {
-      input: {
-        name: "Initial Project",
-        skillIds: [skill.id],
-      },
-    });
 
     expect(result.errors).toBeDefined();
   });
