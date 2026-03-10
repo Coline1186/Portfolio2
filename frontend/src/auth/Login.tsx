@@ -63,10 +63,14 @@ function Login() {
         </h1>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Email
           </label>
           <input
+            id="email"
             autoComplete="email"
             type="email"
             {...register("email")}
@@ -83,10 +87,14 @@ function Login() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Mot de passe
           </label>
           <input
+            id="password"
             type="password"
             autoComplete="current-password"
             {...register("password")}
