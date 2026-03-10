@@ -1,31 +1,35 @@
 import { gql } from "graphql-tag";
 
 export default gql`
-type Skill {
+  type Skill {
     id: ID!
+    position: Int!
     name: String!
     logo: String!
-}
+  }
 
-type Query {
+  type Query {
     skills: [Skill]
     skillId(id: ID!): Skill
-}
+  }
 
-type Mutation {
+  type Mutation {
     createSkill(input: CreateSkillInput!): Skill
     updateSkill(input: UpdateSkillInput!): Skill
+    reorderSkills(ids: [ID!]!): Boolean
     deleteSkill(id: ID!): Boolean
-}
+  }
 
-input CreateSkillInput {
+  input CreateSkillInput {
+    position: Int!
     name: String!
     logo: String!
-}
+  }
 
-input UpdateSkillInput {
+  input UpdateSkillInput {
     id: ID!
+    position: Int
     name: String
     logo: String
-}
+  }
 `;

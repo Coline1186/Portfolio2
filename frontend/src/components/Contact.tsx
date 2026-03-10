@@ -63,8 +63,7 @@ function Contact() {
           <h1 className="text-4xl font-bold mt-[1vh]">Contact</h1>
           <br />
           <p>
-            N'hésitez pas à me contacter, je vous répondrai dans les plus brefs
-            délais
+            {`N'hésitez pas à me contacter, je vous répondrai dans les plus brefs délais`}
           </p>
         </div>
         <div className="relative w-[92%] mx-auto mt-6 mb-10 pt-4 flex justify-center overflow-hidden rounded-[8%] border border-[#ffc58d] shadow-[0px_5px_15px_rgb(241,190,143)] tablet:w-[75%] tablet:mt-8 tablet:mb-12 lg:w-151 lg:mt-10 lg:mb-16">

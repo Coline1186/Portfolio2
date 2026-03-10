@@ -19,12 +19,12 @@ const authCookieOptions = {
 
 export default {
   Query: {
-    userInfo: async (_p: any, args: { id: string }) => {
+    userInfo: async (_p: unknown, args: { id: string }) => {
       return await userRepo.findOneBy({ id: args.id });
   }
 },
   Mutation: {
-    register: async (_p: any, { input }: any) => {
+    register: async (_p: unknown, { input }: { input: { email: string; password: string } }) => {
       const newUser = userRepo.create({
         ...input,
         role: UserRole.ADMIN,
@@ -34,7 +34,7 @@ export default {
       
       return userRepo.save(newUser);
     },
-    login: async (_p: any, args: any, ctx: MyContext) => {
+    login: async (_p: unknown, args: { input: { email: string; password: string } }, ctx: MyContext) => {
         const user = await userRepo.findOneBy({ email: args.input.email });
         if (!user) {
             throw new Error("Email ou mot de passe incorrect");
@@ -46,19 +46,19 @@ export default {
         }
 
         const token = await generateToken(user.email);
-        let cookies = new Cookies(ctx.req, ctx.res);
+        const cookies = new Cookies(ctx.req, ctx.res);
         cookies.set("token", token, authCookieOptions);
         return { message: "Bienvenue", success: true };
     },
-    logout: async (_p: any, _args: any, ctx: MyContext) => {
-        let cookies = new Cookies(ctx.req, ctx.res);
+    logout: async (_p: unknown, _args: unknown, ctx: MyContext) => {
+        const cookies = new Cookies(ctx.req, ctx.res);
         cookies.set("token", "", {
           ...authCookieOptions,
           maxAge: 0,
         });
         return { message: "Déconnexion réussie", success: true };
     },
-    checkToken: async (_p: any, _args: any, ctx: MyContext) => {
+    checkToken: async (_p: unknown, _args: unknown, ctx: MyContext) => {
       if (!ctx.user) return null;
       return ctx.user ? { email: ctx.user.email, role: ctx.user.role } : null;
     },

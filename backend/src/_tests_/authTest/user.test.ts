@@ -42,14 +42,6 @@ mutation Login($input: InputLogin!) {
   }
 }
 `;
-const LOGOUT_USER = `
-mutation Logout($input: InputLogout!) {
-  logout(input: $input) {
-    message
-    success
-  }
-}
-`;
 
 type ResponseDataRegister = {
   register: {

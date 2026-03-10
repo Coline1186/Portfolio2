@@ -12,6 +12,7 @@ import EntityFormWrapper from "../../layoutElements/EntityFormWrapper";
 
 type Skill = {
   id: string;
+  position: number;
   name: string;
   logo: string;
 };
@@ -24,6 +25,7 @@ type Props = {
 
 const AddEditSkill = ({ refetch, skill, triggerLabel }: Props) => {
   const [name, setName] = useState(skill?.name ?? "");
+  const [position, setPosition] = useState(skill ? skill.position : 0);
   const [file, setFile] = useState<File | null>(null);
 
   const [createSkill] = useMutation(CREATE_SKILL);
@@ -56,6 +58,7 @@ const AddEditSkill = ({ refetch, skill, triggerLabel }: Props) => {
           }
         : {
             input: {
+              position,
               name,
               logo: filename,
             },
@@ -91,11 +94,20 @@ const AddEditSkill = ({ refetch, skill, triggerLabel }: Props) => {
       }
       isDisabled={!name.trim() || (!skill && !file)}
     >
+      {!skill && (
+        <div className="grid gap-3">
+          <Label>Position</Label>
+          <Input
+            type="number"
+            value={position}
+            onChange={(e) => setPosition(parseInt(e.target.value) || 0)}
+          />
+        </div>
+      )}
       <div className="grid gap-3">
         <Label>Nom</Label>
         <Input value={name} onChange={handleNameChange} />
       </div>
-
       <div className="grid gap-3">
         <Label>Logo</Label>
         <Input type="file" onChange={handleFileChange} />

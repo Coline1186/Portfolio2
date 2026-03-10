@@ -41,13 +41,13 @@ function About() {
         <div className="px-6 lg:pl-[10vh]">
           <Fade duration={2000}>
             <p className="mb-[2vh] lg:mb-[4vh] lg:mt-[3vh]">
-              Après presque 14 ans comme secrétaire médicale en radiologie, j'ai
+              {`Après presque 14 ans comme secrétaire médicale en radiologie, j'ai
               choisi de me reconvertir dans le développement web, un domaine qui
               allie ma passion pour la résolution d'énigmes et l'informatique.
               Un bootcamp de 5 mois à la Wild Code School a confirmé mon choix.
               J'ai ensuite réalisé un stage de 2 mois en PHP Symfony, suivi
               d'une alternance de 15 mois en tant que développeuse back-end PHP
-              Symfony, confirmant davantage encore mon choix de reconversion.
+              Symfony, confirmant davantage encore mon choix de reconversion.`}
             </p>
           </Fade>
 
@@ -69,11 +69,11 @@ function About() {
 
           <Fade duration={2000}>
             <p className="mb-[2vh] lg:mb-[4vh]">
-              En dehors du développement web, j'aime voyager aux quatre coins du
+              {`En dehors du développement web, j'aime voyager aux quatre coins du
               monde en famille ou entre amis, assister à des concerts, passer du
-              temps avec mon neveu... <br />
-              Mais en vrai ce que j'aime par dessus tout c'est... MON CHAT 😻,
-              faut dire qu'elle est vraiment parfaite non ? 😆{" "}
+              temps avec mon neveu...`} <br />
+              {`Mais en vrai ce que j'aime par dessus tout c'est... MON CHAT 😻,
+              faut dire qu'elle est vraiment parfaite non ?`} 😆{" "}
             </p>
           </Fade>
         </div>
