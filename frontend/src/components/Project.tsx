@@ -66,7 +66,7 @@ function Project() {
                         />
 
                         <div
-                          className={`gap-10 absolute inset-0 flex flex-col justify-center items-center text-white text-center p-4 tablet:p-6 bg-black/70 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
+                          className={`gap-10 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-gray-400/70 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
                           <h2 className="text-lg text-shadow-[5px_5px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
                             {project.name}
@@ -89,7 +89,7 @@ function Project() {
                                 href={project.webLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-white text-black px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-gray-200 transition"
+                                className="w-21 bg-gray-600 text-white px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-gray-500 transition"
                               >
                                 Site
                               </a>
@@ -100,7 +100,7 @@ function Project() {
                                 href={project.githubLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border border-white px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-white hover:text-black transition"
+                                className="w-21 border border-white px-3 py-1.5 tablet:px-4 tablet:py-2 rounded-lg text-sm tablet:text-base font-medium hover:bg-white hover:text-black transition"
                               >
                                 GitHub
                               </a>
