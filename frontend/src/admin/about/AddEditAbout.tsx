@@ -12,6 +12,7 @@ import { Input } from "../../ui/input";
 
 type About = {
   id: string;
+  position: number;
   image: string;
 };
 
@@ -23,6 +24,7 @@ type Props = {
 
 function AddEditAbout({ refetch, about, triggerLabel }: Props) {
   const [file, setFile] = useState<File | null>(null);
+  const [position, setPosition] = useState(about ? about.position : 0);
   const [createAbout] = useMutation(CREATE_ABOUT);
   const [updateAbout] = useMutation(UPDATE_ABOUT);
 
@@ -48,6 +50,7 @@ function AddEditAbout({ refetch, about, triggerLabel }: Props) {
           }
         : {
             input: {
+              position,
               image: filename,
             },
           },
@@ -80,6 +83,16 @@ function AddEditAbout({ refetch, about, triggerLabel }: Props) {
       }
       isDisabled={!about && !file}
     >
+      {!about && (
+        <div className="grid gap-3">
+          <Label>Position</Label>
+          <Input
+            type="number"
+            value={position}
+            onChange={(e) => setPosition(parseInt(e.target.value) || 0)}
+          />
+        </div>
+      )}
       <div className="grid gap-3">
         <Label>Photo</Label>
         <Input type="file" onChange={handleFileChange} />

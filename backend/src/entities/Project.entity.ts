@@ -6,6 +6,9 @@ export class Project {
     @PrimaryGeneratedColumn()
     id!: string;
 
+    @Column({ nullable: true })
+    position?: number;
+
     @Column()
     name!: string;
 

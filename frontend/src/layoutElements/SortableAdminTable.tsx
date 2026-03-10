@@ -10,12 +10,14 @@ type Props<T> = {
   items: T[];
   onDragEnd: (event: DragEndEvent) => void;
   renderRow: (item: T, index: number) => React.ReactNode;
+  header?: React.ReactNode;
 };
 
 export default function SortableAdminTable<T extends { id: string }>({
   items,
   onDragEnd,
   renderRow,
+  header,
 }: Props<T>) {
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
@@ -24,7 +26,10 @@ export default function SortableAdminTable<T extends { id: string }>({
         strategy={verticalListSortingStrategy}
       >
         <Table>
-          <TableBody>{items.map((item, index) => renderRow(item, index))}</TableBody>
+          {header}
+          <TableBody>
+            {items.map((item, index) => renderRow(item, index))}
+          </TableBody>
         </Table>
       </SortableContext>
     </DndContext>

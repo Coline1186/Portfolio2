@@ -14,7 +14,6 @@ export const UPDATE_SKILL = gql`
   mutation UpdateSkill($input: UpdateSkillInput!) {
     updateSkill(input: $input) {
       id
-      position
       logo
       name
     }

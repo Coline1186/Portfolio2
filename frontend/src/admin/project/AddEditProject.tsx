@@ -27,6 +27,7 @@ type SkillQuery = {
 
 type Project = {
   id: string;
+  position: number;
   name: string;
   image: string;
   githubLink: string;
@@ -41,6 +42,7 @@ type Props = {
 };
 
 function AddEditProject({ refetch, project, triggerLabel }: Props) {
+  const [position, setPosition] = useState(project ? project.position : 0);
   const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState(project?.name ?? "");
   const [githubLink, setGithubLink] = useState(project?.githubLink ?? "");
@@ -133,6 +135,16 @@ function AddEditProject({ refetch, project, triggerLabel }: Props) {
       }
       isDisabled={!project && !name.trim()}
     >
+      {!project && (
+        <div className="grid gap-3">
+          <Label>Position</Label>
+          <Input
+            type="number"
+            value={position}
+            onChange={(e) => setPosition(parseInt(e.target.value) || 0)}
+          />
+        </div>
+      )}
       <div className="grid gap-3">
         <Label>Nom</Label>
         <Input value={name} onChange={handleNameChange} />
