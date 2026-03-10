@@ -1,31 +1,30 @@
-import AddEditSkill from "@/admin/skill/AddEditSkill";
-import { Button } from "@/ui/button";
 import { TableHead, TableRow } from "@/ui/table";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import AddEditAbout from "./AddEditAbout";
+import { Button } from "@/ui/button";
 
-type Skill = {
+type About = {
   id: string;
   position: number;
-  name: string;
-  logo: string;
+  image: string;
 };
 
 type Props = {
-  skill: Skill;
+  about: About;
   index: number;
   refetch: () => void;
   handleDelete: (id: string) => void;
 };
 
-export default function SortableSkillRow({
-  skill,
+export default function SortableAboutRow({
+  about,
   index,
   refetch,
   handleDelete,
 }: Props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: skill.id });
+    useSortable({ id: about.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -45,21 +44,19 @@ export default function SortableSkillRow({
       </TableHead>
 
       <TableHead>{index + 1}</TableHead>
-      <TableHead>{skill.name}</TableHead>
-
       <TableHead>
         <img
-          src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
+          src={`${import.meta.env.VITE_BACKEND_URL_FILES}${about.image}`}
           className="w-10 h-10 object-cover rounded-md"
         />
       </TableHead>
 
       <TableHead>
-        <AddEditSkill refetch={refetch} skill={skill} triggerLabel="Modifier" />
+        <AddEditAbout refetch={refetch} about={about} triggerLabel="Modifier" />
       </TableHead>
 
       <TableHead>
-        <Button onClick={() => handleDelete(skill.id)} className="w-25">
+        <Button onClick={() => handleDelete(about.id)} className="w-25">
           Supprimer
         </Button>
       </TableHead>

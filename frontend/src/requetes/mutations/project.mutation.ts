@@ -4,6 +4,7 @@ export const CREATE_PROJECT = gql`
   mutation CreateProject($input: CreateProjectInput!) {
     createProject(input: $input) {
       id
+      position
       name
       image
       webLink
@@ -12,6 +13,12 @@ export const CREATE_PROJECT = gql`
         logo
       }
     }
+  }
+`;
+
+export const REORDER_PROJECTS = gql`
+  mutation ReorderProjects($ids: [ID!]!) {
+    reorderProjects(ids: $ids)
   }
 `;
 

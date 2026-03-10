@@ -1,20 +1,20 @@
 import { useMutation, useQuery } from "@apollo/client/react";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../ui/table";
+import { TableHead, TableHeader, TableRow } from "../../ui/table";
 import { GET_PROJECT } from "../../requetes/queries/project.query";
-import { DELETE_PROJECT } from "../../requetes/mutations/project.mutation";
+import {
+  DELETE_PROJECT,
+  REORDER_PROJECTS,
+} from "../../requetes/mutations/project.mutation";
 import { toast } from "sonner";
 import AddEditProject from "./AddEditProject";
-import { Button } from "../../ui/button";
+import { useSortableEntities } from "@/hooks/useSortableEntities";
+import SortableAdminTable from "@/layoutElements/SortableAdminTable";
+import SortableProjectRow from "./SortableProjectRow";
 
 type ProjectQuery = {
   projects: {
     id: string;
+    position: number;
     name: string;
     image: string;
     webLink: string;
@@ -29,12 +29,19 @@ type ProjectQuery = {
 
 function ProjectManagement() {
   const { refetch, loading, error, data } = useQuery<ProjectQuery>(GET_PROJECT);
-  const [deleteSkill] = useMutation(DELETE_PROJECT);
+  const [reorderProjects] = useMutation(REORDER_PROJECTS);
+  const { items: projects, handleDragEnd } = useSortableEntities({
+    data: data?.projects,
+    reorder: async (ids) => {
+      await reorderProjects({ variables: { ids } });
+    },
+  });
+  const [deleteProject] = useMutation(DELETE_PROJECT);
 
   const handleDelete = async (id: string) => {
     if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
       try {
-        await deleteSkill({ variables: { deleteProjectId: id } });
+        await deleteProject({ variables: { deleteProjectId: id } });
         toast.success("Projet supprimé avec succès");
         refetch();
       } catch {
@@ -42,6 +49,9 @@ function ProjectManagement() {
       }
     }
   };
+
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p>Erreur</p>;
 
   return (
     <div className="flex flex-col px-4 py-3">
@@ -52,10 +62,18 @@ function ProjectManagement() {
       </div>
 
       <div className="border rounded-md overflow-x-auto">
-        <div className="max-h-100 overflow-y-auto">
-          <Table>
+        <SortableAdminTable
+          items={projects}
+          onDragEnd={handleDragEnd}
+          header={
             <TableHeader>
               <TableRow>
+                <TableHead className="text-left w-62.5 pr-1">
+                  Réorganiser
+                </TableHead>
+                <TableHead className="text-left w-62.5 pr-1">
+                  Position
+                </TableHead>
                 <TableHead className="text-left w-62.5 pr-1">Nom</TableHead>
                 <TableHead className="text-left w-25 pr-1">Image</TableHead>
                 <TableHead className="text-left w-25 pr-1">
@@ -69,76 +87,17 @@ function ProjectManagement() {
                 <TableHead className="text-left w-25 pr-1">Supprimer</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
-              {loading && (
-                <TableRow>
-                  <TableHead colSpan={4}>Chargement...</TableHead>
-                </TableRow>
-              )}
-
-              {error && (
-                <TableRow>
-                  <TableHead colSpan={4}>Erreur de chargement</TableHead>
-                </TableRow>
-              )}
-              {data?.projects.map((project) => (
-                <TableRow key={project.id}>
-                  <TableHead className="text-left">{project.name}</TableHead>
-                  <TableHead className="text-left">
-                    <img
-                      src={`${import.meta.env.VITE_BACKEND_URL_FILES}${project.image}`}
-                      alt={`Logo de ${project.name}`}
-                      className="w-10 h-10 object-cover rounded-md"
-                    />
-                  </TableHead>
-                  <TableHead className="text-left">
-                    {project.githubLink}
-                  </TableHead>
-                  <TableHead className="text-left">{project.webLink}</TableHead>
-                  <TableHead className="text-left">
-                    <div className="flex gap-2 min-h-6 items-center">
-                      {project.skills.length > 0 ? (
-                        project.skills.map((skill) => (
-                          <div
-                            key={skill.id}
-                            className="w-6 h-6 flex items-center justify-center"
-                          >
-                            {skill.logo ? (
-                              <img
-                                src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
-                                alt={`Logo de ${skill.name}`}
-                                className="w-6 h-6 object-cover rounded-md"
-                              />
-                            ) : (
-                              <div className="w-6 h-6 bg-gray-200 rounded-md" />
-                            )}
-                          </div>
-                        ))
-                      ) : (
-                        <span className="text-xs text-gray-400"></span>
-                      )}
-                    </div>
-                  </TableHead>
-                  <TableHead>
-                    <AddEditProject
-                      refetch={refetch}
-                      project={project}
-                      triggerLabel="Modifier"
-                    />
-                  </TableHead>
-                  <TableHead>
-                    <Button
-                      onClick={() => handleDelete(project.id)}
-                      className="w-25"
-                    >
-                      Supprimer
-                    </Button>
-                  </TableHead>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+          }
+          renderRow={(project, index) => (
+            <SortableProjectRow
+              key={project.id}
+              project={project}
+              index={index}
+              refetch={refetch}
+              handleDelete={handleDelete}
+            />
+          )}
+        />
       </div>
 
       <div className="mt-4">

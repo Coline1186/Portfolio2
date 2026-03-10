@@ -10,6 +10,7 @@ import AddEditSkill from "./AddEditSkill";
 import { useSortableEntities } from "@/hooks/useSortableEntities";
 import SortableAdminTable from "@/layoutElements/SortableAdminTable";
 import SortableSkillRow from "./SortableSkillRow";
+import { TableHead, TableHeader, TableRow } from "@/ui/table";
 
 type Skill = {
   id: string;
@@ -58,6 +59,18 @@ function SkillManagement() {
         <SortableAdminTable
           items={skills}
           onDragEnd={handleDragEnd}
+          header={
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-left w-62.5 pr-1">Réorganiser</TableHead>
+                <TableHead className="text-left w-62.5 pr-1">Position</TableHead>
+                <TableHead className="text-left w-62.5 pr-1">Nom</TableHead>
+                <TableHead className="text-left w-25 pr-1">Logo</TableHead>
+                <TableHead className="text-left w-25 pr-1">Modifier</TableHead>
+                <TableHead className="text-left w-25 pr-1">Supprimer</TableHead>
+              </TableRow>
+            </TableHeader>
+          }
           renderRow={(skill, index) => (
             <SortableSkillRow
               key={skill.id}

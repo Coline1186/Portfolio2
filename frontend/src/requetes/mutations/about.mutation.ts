@@ -17,6 +17,12 @@ export const UPDATE_ABOUT = gql`
   }
 `;
 
+export const REORDER_ABOUTS = gql`
+  mutation ReorderAbouts($ids: [ID!]!) {
+    reorderAbouts(ids: $ids)
+  }
+`;
+
 export const DELETE_ABOUT = gql`
   mutation DeleteAbout($deleteAboutId: ID!) {
   deleteAbout(id: $deleteAboutId)

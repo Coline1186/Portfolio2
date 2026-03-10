@@ -1,26 +1,33 @@
 import { useMutation, useQuery } from "@apollo/client/react";
 import { GET_ABOUT } from "../../requetes/queries/about.query";
-import { DELETE_ABOUT } from "../../requetes/mutations/about.mutation";
-import { toast } from "sonner";
 import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../ui/table";
+  DELETE_ABOUT,
+  REORDER_ABOUTS,
+} from "../../requetes/mutations/about.mutation";
+import { toast } from "sonner";
 import AddEditAbout from "./AddEditAbout";
-import { Button } from "../../ui/button";
+import { useSortableEntities } from "@/hooks/useSortableEntities";
+import SortableAdminTable from "@/layoutElements/SortableAdminTable";
+import SortableAboutRow from "./SortableAboutRow";
+import { TableHead, TableHeader, TableRow } from "@/ui/table";
 
 type AboutQuery = {
   abouts: {
     id: string;
+    position: number;
     image: string;
   }[];
 };
 
 function AboutManagement() {
   const { refetch, loading, error, data } = useQuery<AboutQuery>(GET_ABOUT);
+  const { items: abouts, handleDragEnd } = useSortableEntities({
+    data: data?.abouts,
+    reorder: async (ids) => {
+      await reorderAbouts({ variables: { ids } });
+    },
+  });
+  const [reorderAbouts] = useMutation(REORDER_ABOUTS);
   const [deleteAbout] = useMutation(DELETE_ABOUT);
 
   const handleDelete = async (id: string) => {
@@ -34,6 +41,10 @@ function AboutManagement() {
       }
     }
   };
+
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p>Erreur</p>;
+
   return (
     <div className="flex flex-col px-4 py-3">
       <div className="mt-4 md:mt-0">
@@ -44,54 +55,34 @@ function AboutManagement() {
 
       <div className="border rounded-md overflow-x-auto">
         <div className="max-h-100 overflow-y-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-left w-25 pr-1">Photo</TableHead>
-                <TableHead className="text-left w-25 pr-1">Modifier</TableHead>
-                <TableHead className="text-left w-25 pr-1">Supprimer</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading && (
+          <SortableAdminTable
+            items={abouts}
+            onDragEnd={handleDragEnd}
+            header={
+              <TableHeader>
                 <TableRow>
-                  <TableHead colSpan={3}>Chargement...</TableHead>
-                </TableRow>
-              )}
-
-              {error && (
-                <TableRow>
-                  <TableHead colSpan={3}>Erreur de chargement</TableHead>
-                </TableRow>
-              )}
-              {data?.abouts.map((about) => (
-                <TableRow key={about.id}>
-                  <TableHead className="text-left">
-                    <img
-                      src={`${import.meta.env.VITE_BACKEND_URL_FILES}${about.image}`}
-                      alt="Photo"
-                      className="w-24 h-24 object-cover rounded-md"
-                    />
+                  <TableHead className="text-left w-25 pr-1">Réorganiser</TableHead>
+                  <TableHead className="text-left w-25 pr-1">Position</TableHead>
+                  <TableHead className="text-left w-25 pr-1">Photo</TableHead>
+                  <TableHead className="text-left w-25 pr-1">
+                    Modifier
                   </TableHead>
-                  <TableHead>
-                    <AddEditAbout
-                      refetch={refetch}
-                      about={about}
-                      triggerLabel="Modifier"
-                    />
-                  </TableHead>
-                  <TableHead>
-                    <Button
-                      onClick={() => handleDelete(about.id)}
-                      className="w-25"
-                    >
-                      Supprimer
-                    </Button>
+                  <TableHead className="text-left w-25 pr-1">
+                    Supprimer
                   </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+            }
+            renderRow={(about, index) => (
+              <SortableAboutRow
+                key={about.id}
+                about={about}
+                index={index}
+                refetch={refetch}
+                handleDelete={handleDelete}
+              />
+            )}
+          />
         </div>
       </div>
 

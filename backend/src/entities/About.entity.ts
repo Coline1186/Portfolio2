@@ -2,9 +2,12 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("about")
 export class About {
-    @PrimaryGeneratedColumn()
-    id!: string;
+  @PrimaryGeneratedColumn()
+  id!: string;
 
-    @Column()
-    image!: string;
+  @Column({ nullable: true })
+  position?: number;
+
+  @Column()
+  image!: string;
 }
