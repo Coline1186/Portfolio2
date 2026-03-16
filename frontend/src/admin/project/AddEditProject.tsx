@@ -99,6 +99,7 @@ function AddEditProject({ refetch, project, triggerLabel }: Props) {
           }
         : {
             input: {
+              position,
               name: name,
               githubLink,
               webLink,
