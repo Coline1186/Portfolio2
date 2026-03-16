@@ -13,13 +13,12 @@ const httpLink = new HttpLink({
   credentials: "include",
 });
 
-(window as any).__APOLLO_CLIENT__ = client;
-
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: httpLink,
 });
 
+(window as any).__APOLLO_CLIENT__ = client;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
