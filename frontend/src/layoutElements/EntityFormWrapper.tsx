@@ -25,7 +25,7 @@ function EntityFormWrapper({
       formDescription={description}
       isDisabled={isDisabled}
     >
-      <div className="grid flex-1 auto-rows-min gap-6 px-4">{children}</div>
+      <div className="grid flex-1 auto-rows-min gap-6 px-4 overflow-y-auto">{children}</div>
     </FormSheet>
   );
 }
