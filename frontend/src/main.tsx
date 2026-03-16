@@ -18,8 +18,6 @@ const client = new ApolloClient({
   link: httpLink,
 });
 
-(window as any).__APOLLO_CLIENT__ = client;
-
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ApolloProvider client={client}>
