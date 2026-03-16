@@ -9,10 +9,11 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { Toaster } from "sonner";
 
 const httpLink = new HttpLink({
-  devtools: { enabled: true },
   uri: import.meta.env.VITE_API_URL,
   credentials: "include",
 });
+
+(window as any).__APOLLO_CLIENT__ = client;
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
