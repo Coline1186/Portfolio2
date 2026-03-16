@@ -9,6 +9,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { Toaster } from "sonner";
 
 const httpLink = new HttpLink({
+  devtools: { enabled: true },
   uri: import.meta.env.VITE_API_URL,
   credentials: "include",
 });
