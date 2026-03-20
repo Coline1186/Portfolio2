@@ -1,11 +1,12 @@
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
 import { loginSchema } from "../validation/schema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LOGIN } from "../requetes/mutations/auth.mutation";
 import { useApolloClient, useMutation } from "@apollo/client/react";
+import { Button } from "@/ui/button";
 
 type FormData = yup.InferType<typeof loginSchema>;
 
@@ -53,7 +54,10 @@ function Login() {
   };
 
   return (
-    <main className="flex min-h-[80vh] items-center justify-center bg-gray-50 p-4">
+    <main className="flex min-h-[80vh] items-center justify-center p-4">
+       <Button className="top-4 absolute left-4">
+        <NavLink to="/">Vous n&apos;êtes pas Admin</NavLink>
+      </Button>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-sm bg-white shadow-md rounded-lg p-4 sm:p-6 md:p-8 space-y-6"
@@ -110,12 +114,12 @@ function Login() {
           )}
         </div>
 
-        <button
+        <Button
           type="submit"
-          className="w-full bg-amber-500 text-white py-3 px-4 rounded-md hover:bg-amber-600 transition-all duration-200"
+          className="w-full py-3 px-4 rounded-md hover:bg-amber-600 transition-all duration-200"
         >
           Se connecter
-        </button>
+        </Button>
         <div className="text-sm text-center">
           {error?.message && (
             <span className="text-red-500 block">{error?.message}</span>
