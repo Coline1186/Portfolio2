@@ -73,7 +73,7 @@ function Skill() {
                   decoding="async"
                   width={147}
                   height={140}
-                  className="w-[22vw] h-auto max-h-17.5 object-contain mb-2.5 lg:w-25 lg:max-h-25"
+                  className="w-[22vw] max-h-17.5 h-17.5 object-contain mb-2.5 lg:w-25 lg:max-h-25 lg:h-25"
                 />
                 <p>{skill.name}</p>
               </motion.div>

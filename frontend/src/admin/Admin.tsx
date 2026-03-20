@@ -21,7 +21,7 @@ function AdminPage() {
       </Button>
       <div className="my-8 mx-4">
         <Tabs defaultValue="skills" className="w-full h-full border rounded-lg">
-          <TabsList className="w-full bg-muted">
+          <TabsList className="w-full bg-muted flex flex-wrap mb-3 lg:mb-0">
             <TabsTrigger
               value="skills"
               className="w-full sm:w-auto text-sm sm:text-base data-[state=inactive]:bg-muted data-[state=inactive]:text-muted-foreground"
