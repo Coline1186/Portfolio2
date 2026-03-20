@@ -73,9 +73,9 @@ function Project() {
                         />
 
                         <div
-                          className={`gap-6 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-[#f9e6d5]/80 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
+                          className={`gap-6 absolute inset-0 flex flex-col justify-between items-center text-center p-4 tablet:p-6 bg-[#f9e6d5]/80 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
-                          <h2 className="text-lg text-shadow-[3px_3px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
+                          <h2 className="top-0 text-lg text-shadow-[3px_3px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
                             {project.name}
                           </h2>
                           <motion.div
