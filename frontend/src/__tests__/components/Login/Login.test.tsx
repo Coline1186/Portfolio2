@@ -1,6 +1,7 @@
 import { it, expect, vi, beforeEach, describe } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
 import Login from "@/auth/Login";
 import { AuthProvider } from "@/auth/AuthProvider";
 import { ApolloProvider, MutationHookOptions } from "@apollo/client/react";
@@ -81,11 +82,18 @@ const mockApolloClient = new ApolloClient({
 
 function renderLogin() {
   return render(
-    <ApolloProvider client={mockApolloClient}>
-      <AuthProvider>
-        <Login />
-      </AuthProvider>
-    </ApolloProvider>,
+    <MemoryRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
+      <ApolloProvider client={mockApolloClient}>
+        <AuthProvider>
+          <Login />
+        </AuthProvider>
+      </ApolloProvider>
+    </MemoryRouter>,
   );
 }
 

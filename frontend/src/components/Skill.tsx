@@ -52,7 +52,7 @@ function Skill() {
         </h1>
       </Fade>
       <div className="flex flex-col gap-6 lg:gap-0 lg:flex-row">
-        <div className="flex content-evenly flex-wrap justify-center gap-10 w-full p-10 bg-[#faece0] lg:gap-18.75 lg:w-[50vw] lg:my-[3%] lg:mx-7">
+        <div className="flex content-evenly flex-wrap justify-center gap-10 w-full p-10 bg-[#faece0] lg:gap-18.75 lg:w-[50vw] lg:my-[3%] lg:ml-7">
           <Fade duration={2000}>
             {data?.skills.map((skill, index) => (
               <motion.div

@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import ProtectedArea from "./auth/ProtectedArea";
 import LogoBack from "./assets/logoBack.webp";
@@ -123,7 +123,6 @@ function HomePage() {
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -147,7 +146,6 @@ function App() {
         <Route path="/auth/logout" element={<Logout />} />
         <Route path="/privacy" element={<Privacy />} />
       </Routes>
-    </BrowserRouter>
   );
 }
 
