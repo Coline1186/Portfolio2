@@ -118,7 +118,7 @@ function Login() {
           type="submit"
           className="w-full py-3 px-4 rounded-md hover:bg-amber-600 transition-all duration-200"
         >
-          Se connecter
+          <NavLink to="/admin">Se connecter</NavLink>
         </Button>
         <div className="text-sm text-center">
           {error?.message && (
