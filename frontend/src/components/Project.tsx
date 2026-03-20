@@ -73,7 +73,7 @@ function Project() {
                         />
 
                         <div
-                          className={`gap-10 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-[#ffc58d]/60 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
+                          className={`gap-6 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-[#f9e6d5]/80 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
                           <h2 className="text-lg text-shadow-[3px_3px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
                             {project.name}
@@ -86,7 +86,7 @@ function Project() {
                               duration: 2,
                             }}
                           >
-                            <div className="lg:w-160 tablet:w-120 w-60 flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
+                            <div className="lg:w-160 tablet:w-120 w-80 flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
                               {project.skills.map((skill) => (
                                 <img
                                   key={skill.id}
