@@ -1,9 +1,16 @@
 import { Fade } from "react-awesome-reveal";
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/ui/card";
 import { useQuery } from "@apollo/client/react";
 import { GET_PROJECT } from "@/requetes/queries/project.query";
 import { useState } from "react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
 type ProjectQuery = {
   projects: {
@@ -66,23 +73,32 @@ function Project() {
                         />
 
                         <div
-                          className={`gap-10 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-gray-300/80 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
+                          className={`gap-6 absolute inset-0 flex flex-col justify-center items-center text-center p-4 tablet:p-6 bg-[#ffc58d]/60 transition-opacity duration-300 ${activeId === project.id ? "opacity-100" : "opacity-0"} lg:opacity-0 lg:group-hover:opacity-100`}
                         >
                           <h2 className="text-lg text-shadow-[3px_3px_gray] tablet:text-2xl lg:text-5xl font-bold mb-4">
                             {project.name}
                           </h2>
-                          <div className="lg:w-160 tablet:w-120 w-60 hover:scale-110 flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
-                            {project.skills.map((skill) => (
-                              <img
-                                key={skill.id}
-                                src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
-                                alt={skill.name}
-                                loading="lazy"
-                                decoding="async"
-                                className="w-8 h-8 tablet:w-12 tablet:h-12 lg:w-15 lg:h-15 object-contain"
-                              />
-                            ))}
-                          </div>
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            animate={{ y: [2, -10, 2] }}
+                            transition={{
+                              repeat: Infinity,
+                              duration: 2,
+                            }}
+                          >
+                            <div className="lg:w-160 tablet:w-120 w-60 flex flex-wrap gap-2 tablet:gap-3 justify-center mb-5">
+                              {project.skills.map((skill) => (
+                                <img
+                                  key={skill.id}
+                                  src={`${import.meta.env.VITE_BACKEND_URL_FILES}${skill.logo}`}
+                                  alt={skill.name}
+                                  loading="lazy"
+                                  decoding="async"
+                                  className="w-8 h-8 tablet:w-12 tablet:h-12 lg:w-13 lg:h-13 object-contain"
+                                />
+                              ))}
+                            </div>
+                          </motion.div>
                           <div className="flex gap-3 tablet:gap-4">
                             {project.webLink && (
                               <a
