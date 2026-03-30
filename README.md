@@ -151,7 +151,11 @@ Accès :
 
 ## 📸 Aperçu page Admin (non visible si pas de compte)
 
+<<<<<<< HEAD
 ![Admin](./frontend/public/screenshots/Capture%20d’écran%202026-03-20%20à%2019.09.18.png)
+=======
+![Admin](./frontend/public/Capture%20d’écran%202026-03-20%20à%2019.09.18.png)
+>>>>>>> c8500ec70f67077939167d8d669f4cb8903038a4
 
 ---
 

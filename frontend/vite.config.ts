@@ -1,6 +1,5 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
-import legacy from "@vitejs/plugin-legacy";
 import path from "path";
 
 export default defineConfig({
@@ -13,12 +12,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  plugins: [
-    react(),
-    legacy({
-      targets: ["defaults", "not IE 11", "ios >= 9"],
-    }),
-  ],
+  plugins: [react()],
   test: {
     environment: "jsdom",
     globals: true,

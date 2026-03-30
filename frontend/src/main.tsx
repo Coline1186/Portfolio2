@@ -8,8 +8,6 @@ import "./App.css";
 import { AuthProvider } from "./auth/AuthProvider";
 import { Toaster } from "sonner";
 import { BrowserRouter } from "react-router-dom";
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 
 const httpLink = new HttpLink({
   uri: import.meta.env.VITE_API_URL,
